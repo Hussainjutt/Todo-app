@@ -1,0 +1,53 @@
+.input_container_2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 40px;
+}
+.input_container_2 input {
+  width: 100%;
+  padding: 0.7rem 31.8px 0.7rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  margin-right: -33px;
+}
+.input_container_2 input::placeholder {
+  color: #ccc;
+}
+.input_container_2 input:focus {
+  outline: none;
+}
+.input_container_2 .icon_2 {
+  position: relative;
+  top: -2px;
+  left: -8px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.input_container_2 button {
+  background-color: transparent;
+  outline: none;
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+}
+.input_container_2 .icon_2:active {
+  color: #643cdb;
+}
+.input_error {
+  outline: 1px solid red !important;
+}
+.error {
+  color: red;
+  position: relative;
+  top: -43px;
+  left: 5px;
+  font-size: 12px;
+}
