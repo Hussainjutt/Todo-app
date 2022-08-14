@@ -9,10 +9,10 @@ const Index = () => {
   return (
     <Layout title={"Profile"}>
       <Row className="Layout_1" id="scroller">
-        <Col className="col-lg-8 col-md-7 col-sm-12 mb-5">
+        <Col className="col-lg-8 col-md-7 col-sm-12 mb-5 col-12">
           <EditProfile num={num} />
         </Col>
-        <Col className="col-lg-4 col-md-5 col-sm-12">
+        <Col className="col-lg-4 col-md-5 col-sm-12 col-12">
           <ProfileCard num={num} setNum={setNum} />
         </Col>
       </Row>

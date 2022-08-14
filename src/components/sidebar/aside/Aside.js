@@ -22,15 +22,12 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import Dummy from "../../../assets/images/dummy-man.png";
 import ErrorImg from "../../../assets/images/errorImg.jpg";
-import { removeToken, removeData } from "../../../components/action/action";
 
 const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const data = useSelector((state) => state.profileReducer.userInfo);
   const HandleLogout = () => {
-    dispatch(removeToken());
-    dispatch(removeData());
+    localStorage.clear();
     navigate("/");
   };
   return (

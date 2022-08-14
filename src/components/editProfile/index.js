@@ -7,7 +7,7 @@ import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import Dummy from "../../assets/images/dummy-man.png";
 import ErrorImg from "../../assets/images/errorImg.jpg";
-import { updateUserInfo, updateDate } from "../../components/action/action";
+import { addUserInfo } from "../../components/action/action";
 import { Button } from "react-bootstrap";
 import { TbLink } from "react-icons/tb";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,7 +19,6 @@ import "./style.css";
 
 const Index = ({ num }) => {
   const [loader, setLoader] = useState(false);
-  const [count, setCount] = useState(0);
   const [state, setState] = useState({
     first_name: "",
     last_name: "",
@@ -27,12 +26,10 @@ const Index = ({ num }) => {
   });
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
-  const token = useSelector((state) => state.profileReducer.token);
-  const updatedDate = useSelector((state) => state.profileReducer.dateOfBirth);
   const data = useSelector((state) => state.profileReducer.userInfo);
+  const token = useSelector((state) => state.profileReducer.token);
   const dispatch = useDispatch();
   const InputRef = useRef();
-  console.log(data);
   useEffect(() => {
     if (num >= 1) {
       InputRef.current.focus();
@@ -54,18 +51,20 @@ const Index = ({ num }) => {
           },
         }
       );
-      dispatch(updateUserInfo(req.data.data));
-      dispatch(updateDate(values.date_of_birth));
-      setCount(count + 1);
-      toast.success(req.data.message);
+      dispatch(
+        addUserInfo({
+          ...req.data.data,
+          date_of_birth: values.date_of_birth,
+          id: data.id,
+        })
+      );
+      toast.success("Profile Updated Successfully");
       setLoader(false);
       setFile("");
       setFileName("");
     } catch (err) {
       setLoader(false);
-      toast.error(err.message + " Please login again");
       toast.error(err.response.data.message);
-      setCount(count + 1);
     }
   };
   useEffect(() => {
@@ -73,10 +72,10 @@ const Index = ({ num }) => {
       ...state,
       first_name: data.first_name,
       last_name: data.last_name,
-      date_of_birth: updatedDate,
+      date_of_birth: data.date_of_birth,
       profile_pic: data.profile_pic,
     });
-  }, [count]);
+  }, [data]);
   return (
     <div className="edit_profile_page ">
       <ToastContainer pauseOnHover={true} />

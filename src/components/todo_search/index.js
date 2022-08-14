@@ -4,15 +4,15 @@ import { BiSearchAlt } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
 import { searchTodos } from "../action/action";
 import axios from "axios";
-const Index = (count) => {
+const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const token = useSelector((state) => state.profileReducer.token);
   const currentPage = useSelector((state) => state.todoReducer.page);
+  const token = useSelector((state) => state.profileReducer.token);
   const dispatch = useDispatch();
   const searchTodo = async () => {
     try {
       const req = await axios.get(
-        `${process.env.REACT_APP_API_URL}/todos/user/1/?search=${searchTerm}&page=${currentPage}`,
+        `/todos/user/1/?search=${searchTerm}&page=${currentPage}`,
         {
           headers: {
             jwt_token: token,

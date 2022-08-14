@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { updateTodo, currentPage } from "../action/action";
 import Pagination from "react-bootstrap/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { API } from "../../config/api";
 const Index = ({ count, counter }) => {
   const [ID, setID] = useState("");
   const [data, setData] = useState([]);
@@ -43,11 +44,19 @@ const Index = ({ count, counter }) => {
     }
   };
   const handleComplete = async (id, status, title) => {
+    console.log(id, status, title);
     try {
       await axios.patch(
         `${process.env.REACT_APP_API_URL}/todos/${id}`,
-        { is_completed: status, title: title },
-        { headers: { jwt_token: token } }
+        {
+          is_completed: status,
+          title: title,
+        },
+        {
+          headers: {
+            jwt_token: token,
+          },
+        }
       );
       status
         ? toast.success("Todo completed successfully")

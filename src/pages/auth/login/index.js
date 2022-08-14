@@ -8,11 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import { Formik } from "formik";
 import * as yup from "yup";
-import {
-  addToken,
-  addUserInfo,
-  updateDate,
-} from "../../../components/action/action";
+import { addToken, addUserInfo } from "../../../components/action/action";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,11 +30,12 @@ const Index = () => {
         setLoader(false);
       } else {
         toast.success("Login Successful");
-        dispatch(addToken(req.data.token));
+        const token = JSON.stringify(req.data.token);
+        localStorage.setItem("token", token);
         let date = new Date(req.data.data.date_of_birth);
         date = date.toISOString().split("T")[0];
-        dispatch(addUserInfo(req.data.data));
-        dispatch(updateDate(date));
+        dispatch(addUserInfo({ ...req.data.data, date_of_birth: date }));
+        dispatch(addToken(req.data.token));
         setLoader(false);
         setTimeout(() => {
           navigate("/profile");

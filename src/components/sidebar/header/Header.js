@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Dummy from "../../../assets/images/dummy-man.png";
 import ErrorImg from "../../../assets/images/errorImg.jpg";
-import { removeToken, removeData } from "../../../components/action/action";
 import { BiLogOut } from "react-icons/bi";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +30,6 @@ const Header = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const data = useSelector((state) => state.profileReducer.userInfo);
-  const dispatch = useDispatch();
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -40,8 +38,7 @@ const Header = (props) => {
     setAnchorEl(null);
   };
   const HandleLogout = () => {
-    dispatch(removeToken());
-    dispatch(removeData());
+    localStorage.clear();
     navigate("/");
   };
   return (

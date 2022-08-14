@@ -1,21 +1,3 @@
-export const addToken = (token) => {
-  return {
-    type: "ADD_TOKEN",
-    payload: {
-      token: token,
-    },
-  };
-};
-export const removeToken = () => {
-  return {
-    type: "REMOVE_TOKEN",
-  };
-};
-export const removeData = () => {
-  return {
-    type: "REMOVE_DATA",
-  };
-};
 export const addUserInfo = (values) => {
   return {
     type: "ADD_USER_INFO",
@@ -24,19 +6,11 @@ export const addUserInfo = (values) => {
     },
   };
 };
-export const updateUserInfo = (values) => {
+export const addToken = (token) => {
   return {
-    type: "UPDATE_USER_INFO",
+    type: "ADD_TOKEN",
     payload: {
-      values: values,
-    },
-  };
-};
-export const updateDate = (values) => {
-  return {
-    type: "UPDATE_DATE",
-    payload: {
-      values: values,
+      token: token,
     },
   };
 };

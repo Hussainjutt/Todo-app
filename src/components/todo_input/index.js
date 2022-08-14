@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import * as yup from "yup";
 import axios from "axios";
 import { Spinner } from "react-bootstrap";
+import { API } from "../../config/api";
 const Index = ({ counter, count }) => {
   const token = useSelector((state) => state.profileReducer.token);
   const todo = useSelector((state) => state.todoReducer.todo);
@@ -20,15 +21,11 @@ const Index = ({ counter, count }) => {
   const createTodo = async (values) => {
     setLoader(true);
     try {
-      const req = await axios.post(
-        `${process.env.REACT_APP_API_URL}/todos`,
-        values,
-        {
-          headers: {
-            jwt_token: token,
-          },
-        }
-      );
+      await axios.post(`${process.env.REACT_APP_API_URL}/todos`, values, {
+        headers: {
+          jwt_token: token,
+        },
+      });
       toast.success("Todo created successfully");
       setDisable(false);
       setLoader(false);
@@ -41,7 +38,7 @@ const Index = ({ counter, count }) => {
   };
   const updateTodo = async (values) => {
     try {
-      const req = await axios.patch(
+      await axios.patch(
         `${process.env.REACT_APP_API_URL}/todos/${todo.id}`,
         {
           title: values.title,

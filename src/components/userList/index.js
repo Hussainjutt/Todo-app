@@ -11,6 +11,7 @@ import "./style.css";
 import Pagination from "react-bootstrap/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+
 const Index = () => {
   const token = useSelector((state) => state.profileReducer.token);
   const [data, setData] = useState([]);
@@ -131,7 +132,7 @@ const Index = () => {
                           <td style={{ width: "20%" }}>
                             <span
                               style={{
-                                pointerEvents: id == el.id ? "none" : "",
+                                pointerEvents: id === el.id ? "none" : "",
                               }}
                             >
                               <SwitchButton
@@ -144,33 +145,30 @@ const Index = () => {
                                 size="sm"
                                 disabled={id === el.id}
                                 onChange={async () => {
-                                  setId(el.id);
                                   try {
-                                    if (el.is_active === true) {
-                                      const req = await axios.delete(
-                                        `${process.env.REACT_APP_API_URL}/users/delete/${el.id}?is_active=false`,
-                                        {
-                                          headers: {
-                                            jwt_token: token,
-                                          },
-                                        }
-                                      );
-                                      toast.success(req.data.message);
-                                      getAllUsers();
-                                      setId("");
-                                    } else {
-                                      const req = await axios.delete(
-                                        `${process.env.REACT_APP_API_URL}/users/delete/${el.id}?is_active=true`,
-                                        {
-                                          headers: {
-                                            jwt_token: token,
-                                          },
-                                        }
-                                      );
-                                      toast.success(req.data.message);
-                                      getAllUsers();
-                                      setId("");
-                                    }
+                                    await axios.delete(
+                                      `${
+                                        process.env.REACT_APP_API_URL
+                                      }/users/delete/${el.id}?is_active=${
+                                        el.is_active === true ? false : true
+                                      }`,
+                                      {
+                                        headers: {
+                                          jwt_token: token,
+                                        },
+                                      }
+                                    );
+                                    toast.success(
+                                      `${el.first_name}
+                                       ${el.last_name}
+                                        is now ${
+                                          el.is_active === true
+                                            ? "disabled"
+                                            : "enabled"
+                                        }`
+                                    );
+                                    getAllUsers();
+                                    setId("");
                                   } catch (err) {
                                     setId("");
                                     toast.error(err.message);
