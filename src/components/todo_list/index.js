@@ -11,20 +11,18 @@ import { useDispatch } from "react-redux";
 import { updateTodo, currentPage } from "../action/action";
 import Pagination from "react-bootstrap/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { API } from "../../config/api";
-const Index = ({ count, counter }) => {
-  const [ID, setID] = useState("");
+const Index = ({ count }) => {
   const [data, setData] = useState([]);
   const [loader, setLoader] = useState(false);
   const [param, setParam] = useState("");
-  const [_Id, setId] = useState("");
+  const [id, setId] = useState("");
   const [pageData, setPageData] = useState("");
   const [prev, setPrev] = useState(1);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.profileReducer.token);
   const searchTodo = useSelector((state) => state.todoReducer.data);
   const userID = useSelector((state) => state.profileReducer.userInfo.id);
-  const todoList = async () => {
+  const todos = async () => {
     setLoader(true);
     try {
       const req = await axios.get(
@@ -62,12 +60,12 @@ const Index = ({ count, counter }) => {
         ? toast.success("Todo completed successfully")
         : toast.success("Todo uncompleted successfully");
       setLoader(false);
-      todoList();
-      setID("");
+      todos();
+      setId("");
     } catch (err) {
       toast.error(err.response.data.message);
       setLoader(false);
-      setID("");
+      setId("");
     }
   };
   const handleDeleteTodo = async (id) => {
@@ -79,7 +77,7 @@ const Index = ({ count, counter }) => {
       });
       toast.success("Todo deleted successfully");
       setId("");
-      todoList();
+      todos();
     } catch (err) {
       toast.error(err.response.data.message);
     }
@@ -92,13 +90,13 @@ const Index = ({ count, counter }) => {
         },
       });
       toast.success("All Todos deleted successfully");
-      todoList();
+      todos();
     } catch (err) {
       toast.error(err.response.data.message);
     }
   };
   useEffect(() => {
-    todoList();
+    todos();
   }, [count, param]);
   useEffect(() => {
     setLoader(true);
@@ -106,14 +104,14 @@ const Index = ({ count, counter }) => {
       setData(searchTodo);
     }
     if (searchTodo.includes(true)) {
-      todoList();
+      todos();
     }
     setLoader(false);
   }, [searchTodo, param]);
   return (
     <div className="list-item">
       <ToastContainer pauseOnHover={true} />
-      <ul className="ul">
+      <ul className="list_container">
         {loader ? (
           <p
             style={{
@@ -134,11 +132,11 @@ const Index = ({ count, counter }) => {
             <p style={{ marginLeft: "-63px" }}> No Todos Found</p>
           </span>
         ) : (
-          data.map((item) => (
-            <li key={item.id} className="li">
+          data.map((item, i) => (
+            <li key={item.id} className="item">
               <div className="d-flex">
                 <div>
-                  {ID === item.id ? (
+                  {id === i ? (
                     <Spinner animation="border" variant="primary" size="sm" />
                   ) : (
                     <input
@@ -148,11 +146,11 @@ const Index = ({ count, counter }) => {
                       onChange={(e) => {
                         if (e.target.checked) {
                           handleComplete(item.id, true, item.title);
-                          setID(item.id);
+                          setId(i);
                         }
                         if (e.target.checked === false) {
                           handleComplete(item.id, false, item.title);
-                          setID(item.id);
+                          setId(i);
                         }
                       }}
                       checked={item.is_completed}
@@ -181,7 +179,7 @@ const Index = ({ count, counter }) => {
                     setId(item.id);
                   }}
                 >
-                  {_Id === item.id ? (
+                  {id === item.id ? (
                     <Spinner animation="border" variant="danger" size="sm" />
                   ) : (
                     <RiDeleteBin5Line />

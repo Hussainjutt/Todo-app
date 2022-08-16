@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -27,8 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = useState(null);
   const data = useSelector((state) => state.profileReducer.userInfo);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -55,7 +54,6 @@ const Header = (props) => {
             <Typography variant="h6" className={classes.title}>
               {props.title}
             </Typography>
-
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -81,7 +79,7 @@ const Header = (props) => {
                 getContentAnchorEl={null}
                 anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
                 transformOrigin={{ vertical: "top", horizontal: "left" }}
-                open={open}
+                open={anchorEl}
                 onClose={handleClose}
               >
                 <MenuItem onClick={() => navigate("/profile")}>

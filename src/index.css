@@ -54,9 +54,6 @@ body {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  /* display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 1rem; */
   padding-bottom: 100px;
 }
 @media screen and (max-width: 992px) {
@@ -65,11 +62,12 @@ body {
   }
 }
 
-/* @media screen and (max-width: 768px) {
-  .Layout_1 {
-    padding: 4px;
+@media screen and (max-width: 768px) {
+  .page-link {
+    font-size: 12px !important;
+    height: 40px !important;
   }
-} */
+}
 
 .app {
   height: 100%;
@@ -222,7 +220,12 @@ body {
   max-width: 280px;
   min-width: 280px;
 }
-
+@media screen and (max-width: 350) {
+  .page-link {
+    font-size: 10px !important;
+    color: red !important;
+  }
+}
 @media (max-width: 992px) {
   .pro-sidebar.md {
     position: fixed;

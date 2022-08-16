@@ -18,7 +18,6 @@ const Index = () => {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
-
   const logIn = async (values) => {
     try {
       const req = await axios.post(

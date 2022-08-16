@@ -23,7 +23,7 @@ import { useSelector, useDispatch } from "react-redux/es/exports";
 import Dummy from "../../../assets/images/dummy-man.png";
 import ErrorImg from "../../../assets/images/errorImg.jpg";
 
-const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
+const Aside = ({ toggled, handleToggleSidebar }) => {
   const navigate = useNavigate();
   const data = useSelector((state) => state.profileReducer.userInfo);
   const HandleLogout = () => {
@@ -32,7 +32,6 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
   };
   return (
     <ProSidebar
-      rtl={rtl}
       toggled={toggled}
       breakPoint="lg"
       onToggle={handleToggleSidebar}
@@ -60,14 +59,12 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
           </div>
         </div>
       </SidebarHeader>
-
       <SidebarContent>
         <Menu iconShape="circle">
           <MenuItem icon={<FaUserCircle />}>
-            {" "}
             <NavLink exact to={"/profile"}>
               Profile
-            </NavLink>{" "}
+            </NavLink>
           </MenuItem>
           {data.user_type === "admin" && (
             <MenuItem icon={<RiFileList2Line />}>
@@ -77,56 +74,12 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
             </MenuItem>
           )}
           <MenuItem icon={<FaList />}>
-            {" "}
             <NavLink exact to={"/todoList"}>
               Todo List
             </NavLink>{" "}
           </MenuItem>
         </Menu>
-        {/* <Menu iconShape="circle">
-          <SubMenu
-            suffix={<span className="badge yellow">3</span>}
-            title="withSuffix"
-            icon={<FaRegLaughWink />}
-            data-element={location.pathname}
-          >
-            <MenuItem>
-              <NavLink exact to={"/about"}>
-                submenu About
-              </NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink exact to={"/"}>
-                Home 2
-              </NavLink>
-            </MenuItem>
-            <MenuItem> 4</MenuItem>
-          </SubMenu>
-          <SubMenu
-            prefix={<span className="badge gray">3</span>}
-            title="withPrefix"
-            icon={<FaHeart />}
-            data-element={location.pathname}
-          >
-            <MenuItem>2</MenuItem>
-            <MenuItem>3</MenuItem>
-          </SubMenu>
-          <SubMenu title="multiLevel" icon={<FaList />}>
-            <MenuItem>1 1 </MenuItem>
-            <MenuItem>1 2 </MenuItem>
-            <SubMenu title={`$1 3`}>
-              <MenuItem>1 3.1 </MenuItem>
-              <MenuItem>1 3.2 </MenuItem>
-              <SubMenu title={`$1 3.3`}>
-                <MenuItem>submenu3.3.1</MenuItem>
-                <MenuItem>submenu"3.3.</MenuItem>
-                <MenuItem>submenu3.3.3</MenuItem>
-              </SubMenu>
-            </SubMenu>
-          </SubMenu>
-        </Menu> */}
       </SidebarContent>
-
       <SidebarFooter style={{ textAlign: "center" }}>
         <div
           className="sidebar-btn-wrapper"

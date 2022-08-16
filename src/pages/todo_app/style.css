@@ -26,8 +26,14 @@
   letter-spacing: 6px;
   padding: 40px 0;
 }
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 390px) {
   .todo-main {
     padding: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .todo-main {
+    padding: 0;
   }
 }

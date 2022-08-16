@@ -5,11 +5,11 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   width: 100%;
 }
-.list-item .ul {
+.list-item .list_container {
   list-style-type: none;
   padding-bottom: 20px;
 }
-.list-item .ul .li {
+.list-item .list_container .item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,7 +18,7 @@
   border-bottom: 1px solid #ccc;
   font-family: system-ui;
 }
-.list-item .ul .li .text {
+.list-item .list_container .item .text {
   padding-left: 7px;
   width: 150px;
   overflow: hidden;

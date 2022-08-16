@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import Header from "./header/Header";
 import Aside from "./aside/Aside";
 
-function Layout({ children, title }) {
-  const [rtl, setRtl] = useState(false);
+const Layout = ({ children, title }) => {
   const [toggled, setToggled] = useState(false);
-
   const handleToggleSidebar = (value) => {
     setToggled(value);
   };
@@ -16,7 +14,7 @@ function Layout({ children, title }) {
   return (
     <>
       <div
-        className={`app ${rtl ? "rtl" : ""} ${toggled ? "toggled" : ""}`}
+        className={`app  ${toggled ? "toggled" : ""}`}
         style={{ overflow: "hidden" }}
       >
         <Aside toggled={toggled} handleToggleSidebar={handleToggleSidebar} />
@@ -27,6 +25,6 @@ function Layout({ children, title }) {
       </div>
     </>
   );
-}
+};
 
 export default Layout;

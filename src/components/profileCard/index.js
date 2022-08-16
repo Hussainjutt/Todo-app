@@ -27,7 +27,7 @@ const Index = ({ num, setNum }) => {
             : `${data.first_name} ${data.last_name}`}
         </h3>
         <p className="card_email">{data.email}</p>
-        <p className="card_dtb">🎂 {dateofbirth}</p>
+        <p className="card_dtb">🎂 {data.date_of_birth}</p>
         <Button variant="dark" className="w-50" onClick={() => setNum(num + 1)}>
           Edit
         </Button>
