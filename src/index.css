@@ -62,10 +62,9 @@ body {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 350px) {
   .page-link {
     font-size: 12px !important;
-    height: 40px !important;
   }
 }
 
