@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "react-bootstrap";
 import "./style.css";
 import { useSelector } from "react-redux";
@@ -6,13 +6,12 @@ import Dummy from "../../assets/images/dummy-man.png";
 import ErrorImg from "../../assets/images/errorImg.jpg";
 const Index = ({ num, setNum }) => {
   const data = useSelector((state) => state.profileReducer.userInfo);
-  const dateofbirth = useSelector((state) => state.profileReducer.dateOfBirth);
   return (
     <div className="profile_page_container">
       <div className="profile_card_image_container">
         <img
           src={
-            data.profile_pic == null
+            data.profile_pic === null
               ? Dummy
               : `${process.env.REACT_APP_IMG_URL}/${data.profile_pic}`
           }
@@ -22,7 +21,7 @@ const Index = ({ num, setNum }) => {
       </div>
       <div className="profile_card_content">
         <h3 className="card_name">
-          {data.first_name == ""
+          {data.first_name === ""
             ? "user name"
             : `${data.first_name} ${data.last_name}`}
         </h3>

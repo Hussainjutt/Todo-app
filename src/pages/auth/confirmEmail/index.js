@@ -16,7 +16,7 @@ const Index = () => {
   const [loader, setLoader] = useState(false);
   const forgotPassword = async (values) => {
     try {
-      const req = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_API_URL}/users/forgotpassword`,
         values
       );

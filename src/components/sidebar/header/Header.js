@@ -65,13 +65,14 @@ const Header = (props) => {
               >
                 <img
                   src={
-                    data.profile_pic == null
+                    data.profile_pic === null
                       ? Dummy
                       : `${process.env.REACT_APP_IMG_URL}/${data.profile_pic}`
                   }
                   onError={(e) => (e.target.src = ErrorImg)}
                   className="user-image"
                   style={{ width: "40px", height: "40px" }}
+                  alt="user"
                 />
               </IconButton>
               <Menu

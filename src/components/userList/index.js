@@ -97,7 +97,7 @@ const Index = () => {
                           <td>
                             <img
                               src={
-                                el.profile_pic == null
+                                el.profile_pic === null
                                   ? Dummy
                                   : `${process.env.REACT_APP_IMG_URL}/${el.profile_pic}`
                               }

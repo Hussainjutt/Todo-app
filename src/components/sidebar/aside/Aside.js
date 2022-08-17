@@ -4,22 +4,15 @@ import {
   ProSidebar,
   Menu,
   MenuItem,
-  SubMenu,
   SidebarHeader,
   SidebarFooter,
   SidebarContent,
 } from "react-pro-sidebar";
-import {
-  FaUserCircle,
-  FaGem,
-  FaList,
-  FaRegLaughWink,
-  FaHeart,
-} from "react-icons/fa";
+import { FaUserCircle, FaList } from "react-icons/fa";
 import { RiLogoutBoxFill, RiFileList2Line } from "react-icons/ri";
 import "react-pro-sidebar/dist/css/styles.css";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux/es/exports";
+import { useSelector } from "react-redux/es/exports";
 import Dummy from "../../../assets/images/dummy-man.png";
 import ErrorImg from "../../../assets/images/errorImg.jpg";
 
@@ -39,7 +32,7 @@ const Aside = ({ toggled, handleToggleSidebar }) => {
       <SidebarHeader>
         <div className="sidebar-header">
           <p className="user-name text-white mb-2">
-            {data.first_name == " "
+            {data.first_name === " "
               ? "user name"
               : data.first_name + " " + data.last_name}
           </p>
@@ -48,12 +41,13 @@ const Aside = ({ toggled, handleToggleSidebar }) => {
             <div className="position-absolute bottom-0">
               <img
                 src={
-                  data.profile_pic == null
+                  data.profile_pic === null
                     ? Dummy
                     : `https://juttv1.herokuapp.com/img/users/${data.profile_pic}`
                 }
                 onError={(e) => (e.target.src = ErrorImg)}
                 className="user-image"
+                alt="Somthing went wrong"
               />
             </div>
           </div>

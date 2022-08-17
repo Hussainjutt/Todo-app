@@ -36,7 +36,7 @@
   cursor: pointer;
 }
 .auth_page_img {
-  max-width: 25rem;
+  max-width: 40%;
 }
 .error_text {
   color: red;

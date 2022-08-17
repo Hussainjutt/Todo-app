@@ -70,7 +70,7 @@ const Index = ({ counter, count }) => {
         validationSchema={schema}
         enableReinitialize={true}
         onSubmit={(values, { resetForm }) => {
-          todo.id == "" ? createTodo(values, resetForm) : updateTodo(values);
+          todo.id === "" ? createTodo(values, resetForm) : updateTodo(values);
         }}
       >
         {({

@@ -77,7 +77,7 @@ const Index = ({ num }) => {
     });
   }, [data]);
   return (
-    <div className="edit_profile_page ">
+    <div className="edit_profile_page">
       <ToastContainer pauseOnHover={true} />
       <Formik
         initialValues={{
@@ -190,8 +190,8 @@ const Index = ({ num }) => {
                 <div>
                   <img
                     src={
-                      file == ""
-                        ? data.profile_pic == null
+                      file === ""
+                        ? data.profile_pic === null
                           ? Dummy
                           : `${process.env.REACT_APP_IMG_URL}/${values.profile_pic}`
                         : file
