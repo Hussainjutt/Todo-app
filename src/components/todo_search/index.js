@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./style.css";
 import { BiSearchAlt } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
-import { searchTodos } from "../action/action";
+import { searchTodos } from "../redux/action/index";
 import axios from "axios";
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,13 +12,14 @@ const Index = () => {
   const searchTodo = async () => {
     try {
       const req = await axios.get(
-        `/todos/user/1/?search=${searchTerm}&page=${currentPage}`,
+        `${process.env.REACT_APP_API_URL}/todos/user/1/?search=${searchTerm}&page=${currentPage}`,
         {
           headers: {
             jwt_token: token,
           },
         }
       );
+      console.log(req.data);
       dispatch(searchTodos(req.data.result));
     } catch (err) {
       console.log(err);
@@ -28,7 +29,7 @@ const Index = () => {
     if (searchTerm.length > 0) {
       const delayDebounceFn = setTimeout(() => {
         searchTodo();
-      }, 1000);
+      }, 500);
       return () => clearTimeout(delayDebounceFn);
     } else {
       dispatch(searchTodos([true]));

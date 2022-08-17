@@ -24,7 +24,7 @@ body {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: blue;
+  background: #252f3e;
 }
 #root {
   height: 100%;

@@ -4,12 +4,12 @@ import { RiAddCircleLine } from "react-icons/ri";
 import { Formik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
-import { deleteTodo } from "../action/action";
+import { deleteTodo } from "../redux/action/index";
 import "react-toastify/dist/ReactToastify.css";
 import * as yup from "yup";
 import axios from "axios";
 import { Spinner } from "react-bootstrap";
-import { API } from "../../config/api";
+
 const Index = ({ counter, count }) => {
   const token = useSelector((state) => state.profileReducer.token);
   const todo = useSelector((state) => state.todoReducer.todo);
@@ -17,8 +17,7 @@ const Index = ({ counter, count }) => {
   const inpFocus = useRef();
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
-  const [disable, setDisable] = useState(false);
-  const createTodo = async (values) => {
+  const createTodo = async (values, resetForm) => {
     setLoader(true);
     try {
       await axios.post(`${process.env.REACT_APP_API_URL}/todos`, values, {
@@ -27,13 +26,12 @@ const Index = ({ counter, count }) => {
         },
       });
       toast.success("Todo created successfully");
-      setDisable(false);
       setLoader(false);
       counter(count + 1);
+      resetForm();
     } catch (err) {
       toast.error(err.response.data.message);
       setLoader(false);
-      setDisable(false);
     }
   };
   const updateTodo = async (values) => {
@@ -51,11 +49,9 @@ const Index = ({ counter, count }) => {
       );
       toast.success("Todo updated successfully");
       dispatch(deleteTodo());
-      setDisable(false);
       counter(count + 1);
     } catch (err) {
       toast.error(err.response.data.message);
-      setDisable(false);
     } finally {
       dispatch(deleteTodo());
     }
@@ -74,13 +70,7 @@ const Index = ({ counter, count }) => {
         validationSchema={schema}
         enableReinitialize={true}
         onSubmit={(values, { resetForm }) => {
-          if (todo.id == "") {
-            createTodo(values);
-            setDisable(true);
-            resetForm({ values: "" });
-          } else {
-            updateTodo(values);
-          }
+          todo.id == "" ? createTodo(values, resetForm) : updateTodo(values);
         }}
       >
         {({
@@ -109,7 +99,7 @@ const Index = ({ counter, count }) => {
                 onBlur={handleBlur}
                 ref={inpFocus}
                 className={errors.title && touched.title ? "input_error" : ""}
-                disabled={disable}
+                disabled={loader}
               />
             </div>
             {errors.title && touched.title && (

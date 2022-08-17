@@ -7,22 +7,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Layout from "../../components/sidebar";
 const Index = () => {
   const [count, setCount] = useState(0);
-  const [reload, setReload] = useState(false);
-  const counter = (val) => {
-    setCount(val + 1);
-    if (val === true) {
-      setReload(val);
-    }
-  };
   return (
     <Layout title={"Tods's"}>
       <div className="Layout_2" id="scroller">
         <div className="todo-main">
-          <div style={{ maxWidth: "25rem", margin: "auto" }}>
+          <div style={{ maxWidth: "35rem", margin: "auto" }}>
             <div className="heading">TODO</div>
-            <TodoInput counter={counter} count={count} />
-            <TodoSeach count={reload} />
-            <TodoList count={count} counter={counter} />
+            <TodoInput counter={setCount} count={count} />
+            <TodoSeach />
+            <TodoList count={count} counter={setCount} />
           </div>
         </div>
       </div>

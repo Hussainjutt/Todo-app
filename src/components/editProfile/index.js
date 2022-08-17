@@ -7,7 +7,7 @@ import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import Dummy from "../../assets/images/dummy-man.png";
 import ErrorImg from "../../assets/images/errorImg.jpg";
-import { addUserInfo } from "../../components/action/action";
+import { addUserInfo } from "../redux/action/index";
 import { Button } from "react-bootstrap";
 import { TbLink } from "react-icons/tb";
 import { useSelector, useDispatch } from "react-redux";

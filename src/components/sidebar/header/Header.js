@@ -8,7 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Dummy from "../../../assets/images/dummy-man.png";
 import ErrorImg from "../../../assets/images/errorImg.jpg";
 import { BiLogOut } from "react-icons/bi";
@@ -54,6 +54,7 @@ const Header = (props) => {
             <Typography variant="h6" className={classes.title}>
               {props.title}
             </Typography>
+
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -79,7 +80,7 @@ const Header = (props) => {
                 getContentAnchorEl={null}
                 anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
                 transformOrigin={{ vertical: "top", horizontal: "left" }}
-                open={anchorEl}
+                open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
                 <MenuItem onClick={() => navigate("/profile")}>

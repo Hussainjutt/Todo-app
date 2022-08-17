@@ -13,10 +13,7 @@ const Layout = ({ children, title }) => {
 
   return (
     <>
-      <div
-        className={`app  ${toggled ? "toggled" : ""}`}
-        style={{ overflow: "hidden" }}
-      >
+      <div className={`app  ${toggled ? "toggled" : ""}`}>
         <Aside toggled={toggled} handleToggleSidebar={handleToggleSidebar} />
         <main>
           <Header handleToggleSidebar={handleToggleSidebar} title={title} />

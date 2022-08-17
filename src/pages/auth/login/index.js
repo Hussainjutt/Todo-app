@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { addToken, addUserInfo } from "../../../components/action/action";
+import { addToken, addUserInfo } from "../../../components/redux/action/index";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

@@ -62,21 +62,15 @@ const Aside = ({ toggled, handleToggleSidebar }) => {
       <SidebarContent>
         <Menu iconShape="circle">
           <MenuItem icon={<FaUserCircle />}>
-            <NavLink exact to={"/profile"}>
-              Profile
-            </NavLink>
+            <NavLink to={"/profile"}>Profile</NavLink>
           </MenuItem>
           {data.user_type === "admin" && (
             <MenuItem icon={<RiFileList2Line />}>
-              <NavLink exact to={"/editUsers"}>
-                Users
-              </NavLink>
+              <NavLink to={"/editUsers"}>Users</NavLink>
             </MenuItem>
           )}
           <MenuItem icon={<FaList />}>
-            <NavLink exact to={"/todoList"}>
-              Todo List
-            </NavLink>{" "}
+            <NavLink to={"/todoList"}>Todo List</NavLink>{" "}
           </MenuItem>
         </Menu>
       </SidebarContent>

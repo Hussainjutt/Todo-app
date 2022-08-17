@@ -8,7 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { updateTodo, currentPage } from "../action/action";
+import { updateTodo, currentPage } from "../redux/action/index";
 import Pagination from "react-bootstrap/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
 const Index = ({ count }) => {
@@ -64,7 +64,6 @@ const Index = ({ count }) => {
       setId("");
     } catch (err) {
       toast.error(err.response.data.message);
-      setLoader(false);
       setId("");
     }
   };
@@ -99,14 +98,12 @@ const Index = ({ count }) => {
     todos();
   }, [count, param]);
   useEffect(() => {
-    setLoader(true);
     if (searchTodo.length >= 0) {
       setData(searchTodo);
     }
     if (searchTodo.includes(true)) {
       todos();
     }
-    setLoader(false);
   }, [searchTodo, param]);
   return (
     <div className="list-item">
@@ -122,7 +119,7 @@ const Index = ({ count }) => {
           >
             <Spinner animation="grow" variant="info" size="lg" />
           </p>
-        ) : data.length == 0 ? (
+        ) : data.length === 0 ? (
           <span
             style={{
               textAlign: "center",
@@ -206,7 +203,7 @@ const Index = ({ count }) => {
             <p onClick={() => setParam("")}>All</p> &nbsp;
             <p onClick={() => setParam("/?&status=false")}>Active</p> &nbsp;
             <p onClick={() => setParam("/?&status=true")}>Completed</p>
-          </div>{" "}
+          </div>
           <div>
             <p onClick={() => handleDeleteTodoAll()}>Clear completed</p>
           </div>
@@ -245,11 +242,19 @@ const Index = ({ count }) => {
                   >
                     1
                   </Pagination.Item>
-                  <Pagination.Ellipsis />
+                  <Pagination.Ellipsis
+                    onClick={() => {
+                      if (prev > 1) {
+                        setPrev(prev - 1);
+                      }
+                      setParam(`?page=${pageData.page - 1}`);
+                      dispatch(currentPage(pageData.page - 1));
+                    }}
+                  />
                 </>
               ) : null}
 
-              {[...Array(pageData.totalPage)].slice(0, 3).map((el, i) => (
+              {[...Array(pageData.totalPage)].slice(0, 3).map((el, i, arr) => (
                 <>
                   {pageData.totalPage > prev + i ? (
                     <Pagination.Item
@@ -259,13 +264,20 @@ const Index = ({ count }) => {
                         dispatch(currentPage(prev + i));
                       }}
                       active={pageData.page === i + prev}
+                      key={prev + i}
                     >
                       {prev + i}
                     </Pagination.Item>
                   ) : null}
                 </>
               ))}
-              <Pagination.Ellipsis />
+              <Pagination.Ellipsis
+                onClick={() => {
+                  setPrev(prev + 1);
+                  setParam(`?page=${prev + 1}`);
+                  dispatch(currentPage(prev + 1));
+                }}
+              />
               <Pagination.Item
                 onClick={() => {
                   setParam(`?page=${pageData.totalPage}`);

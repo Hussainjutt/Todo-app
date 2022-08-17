@@ -92,7 +92,7 @@ const Index = () => {
                     </span>
                   ) : (
                     <tbody>
-                      {data.map((el) => (
+                      {data.map((el, i) => (
                         <tr key={el.id}>
                           <td>
                             <img
@@ -224,6 +224,7 @@ const Index = () => {
                             setPrev(prev + i);
                           }}
                           active={pageData.page === i + prev}
+                          key={el}
                         >
                           {prev + i}
                         </Pagination.Item>
