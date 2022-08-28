@@ -52,6 +52,7 @@
 @media screen and (max-width: 500px) {
   .auth_card {
     box-shadow: none;
+    background: transparent;
   }
   .auth_page_img {
     display: none;
