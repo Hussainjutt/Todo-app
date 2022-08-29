@@ -44,3 +44,8 @@
   font-size: 20px;
   color: #6d4689;
 }
+@media screen and (max-width: 768px) {
+  .profile_page_container {
+    margin-bottom: 5rem;
+  }
+}
