@@ -24,7 +24,7 @@ body {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: red;
+  background: #3f51b5;
 }
 #root {
   height: 100%;
@@ -167,6 +167,13 @@ body {
   margin-left: 0;
   margin-right: 5px;
 }
+.collapsed-button {
+  cursor: pointer;
+  background: white;
+  margin: 0;
+  padding: 0 5px 2px 5px;
+  border-radius: 4px;
+}
 @media (max-width: 767.98px) {
   .app {
     overflow: hidden;
@@ -178,6 +185,9 @@ body {
 @media (max-width: 992px) {
   .app .btn-toggle {
     display: flex;
+  }
+  .collapsed-button {
+    display: none;
   }
   .app.rtl .btn-toggle {
     margin-left: auto;
@@ -246,14 +256,15 @@ body {
   height: 80px;
   width: 80px;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 0.75rem;
   border: 7px solid #252f3e;
 }
 
 .pro-sidebar-content,
 .pro-sidebar > .pro-sidebar-inner,
 .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
-  background-color: #252f3e;
+  background-color: #ccc;
+  color: black !important;
 }
 
 .pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout .pro-sidebar-header {
@@ -263,7 +274,9 @@ body {
 .pro-sidebar-header {
   position: relative;
 }
-
+.sidebar-header {
+  background: none !important;
+}
 .bottom-0 {
   bottom: 0;
 }
@@ -273,5 +286,29 @@ body {
   .pro-menu-item
   > .pro-inner-item
   > .pro-icon-wrapper {
-  background-color: transparent;
+  color: white !important;
+}
+.pro-sidebar .pro-menu a {
+  color: black !important;
+}
+.pro-sidebar .pro-menu .pro-menu-item :hover {
+  background: gray !important;
+  color: black !important;
+}
+.active-menu {
+  background: white !important;
+}
+.active-menu .pro-icon-wrapper {
+  background: #000 !important;
+}
+.MuiAppBar-colorPrimary {
+  background: #ccc !important;
+}
+.MuiTypography-h6 {
+  color: black !important;
+  font-weight: 600 !important;
+  letter-spacing: 2px !important;
+}
+.pro-sidebar-footer {
+  background-color: #1d1d1d !important;
 }

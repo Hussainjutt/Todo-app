@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Dummy from "../../../assets/images/dummy-man.png";
 import ErrorImg from "../../../assets/images/errorImg.jpg";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogOut, BiMenu } from "react-icons/bi";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +25,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = (props) => {
+const Header = ({
+  handleToggleSidebar,
+  title,
+  setFix,
+  fix,
+  collapsed,
+  setCollapsed,
+}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const data = useSelector((state) => state.profileReducer.userInfo);
@@ -47,14 +54,23 @@ const Header = (props) => {
           <Toolbar>
             <div
               className={`btn-toggle ${classes.menuButton}`}
-              onClick={() => props.handleToggleSidebar(true)}
+              onClick={() => handleToggleSidebar(true)}
             >
               <FaBars />
             </div>
             <Typography variant="h6" className={classes.title}>
-              {props.title}
+              {title}
             </Typography>
-
+            <p
+              className="collapsed-button"
+              style={{ color: fix ? "black" : "#ccc" }}
+              onClick={() => {
+                setFix(!fix);
+                setCollapsed(!collapsed);
+              }}
+            >
+              <FaBars />
+            </p>
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -71,7 +87,7 @@ const Header = (props) => {
                   }
                   onError={(e) => (e.target.src = ErrorImg)}
                   className="user-image"
-                  style={{ width: "40px", height: "40px" }}
+                  style={{ width: "40px", height: "40px", borderRadius: "50%" }}
                   alt="user"
                 />
               </IconButton>
