@@ -21,6 +21,7 @@ const Aside = ({
   collapsed,
   setCollapsed,
   fix,
+  setWidth,
 }) => {
   const navigate = useNavigate();
   const data = useSelector((state) => state.profileReducer.userInfo);
@@ -39,8 +40,8 @@ const Aside = ({
       winWidth: window.innerWidth,
       winHeight: window.innerHeight,
     });
+    setWidth(window.innerWidth);
   };
-  console.log(winwidth);
   useEffect(() => {
     window.addEventListener("resize", detectSize);
 
@@ -71,12 +72,12 @@ const Aside = ({
     >
       <SidebarHeader>
         <div className="sidebar-header">
-          <p className="user-name text-white mb-2">
+          {/* <p className="user-name text-white mb-2">
             {data.first_name === " "
               ? "user name"
               : data.first_name + " " + data.last_name}
-          </p>
-          {!collapsed && <p className="user-email">{data.email}</p>}
+          </p> */}
+          {/* {!collapsed && <p className="user-email">{data.email}</p>} */}
           <div className="d-flex justify-content-center">
             <div className="position-absolute bottom-0">
               <img

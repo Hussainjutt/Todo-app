@@ -32,6 +32,7 @@ const Header = ({
   fix,
   collapsed,
   setCollapsed,
+  width,
 }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -53,24 +54,25 @@ const Header = ({
         <AppBar position="static">
           <Toolbar>
             <div
-              className={`btn-toggle ${classes.menuButton}`}
-              onClick={() => handleToggleSidebar(true)}
+              className={`collapsed-button`}
+              style={{
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                if (width > 992) {
+                  setFix(!fix);
+                  setCollapsed(!collapsed);
+                } else {
+                  debugger;
+                  handleToggleSidebar(true);
+                }
+              }}
             >
               <FaBars />
             </div>
             <Typography variant="h6" className={classes.title}>
               {title}
             </Typography>
-            <p
-              className="collapsed-button"
-              style={{ color: fix ? "black" : "#ccc" }}
-              onClick={() => {
-                setFix(!fix);
-                setCollapsed(!collapsed);
-              }}
-            >
-              <FaBars />
-            </p>
             <div>
               <IconButton
                 aria-label="account of current user"

@@ -73,20 +73,6 @@ body {
   display: flex;
   position: relative;
 }
-.app .btn-toggle {
-  cursor: pointer;
-  width: 35px;
-  height: 35px;
-  background: #353535;
-  color: #fff;
-  text-align: center;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  display: none;
-}
 .app .sidebar-btn-wrapper {
   display: flex;
   align-items: center;
@@ -173,6 +159,8 @@ body {
   margin: 0;
   padding: 0 5px 2px 5px;
   border-radius: 4px;
+  color: #000;
+  margin-right: 50px;
 }
 @media (max-width: 767.98px) {
   .app {
@@ -182,17 +170,11 @@ body {
     font-size: 24px;
   }
 }
-@media (max-width: 992px) {
-  .app .btn-toggle {
-    display: flex;
-  }
+/* @media (max-width: 992px) {
   .collapsed-button {
     display: none;
   }
-  .app.rtl .btn-toggle {
-    margin-left: auto;
-  }
-}
+} */
 .badge {
   padding: 3px 6px;
   font-size: 9px;
@@ -213,16 +195,11 @@ body {
 }
 
 .sidebar-header {
-  padding-top: 2.4rem;
-  padding-bottom: 2.4rem;
-  margin-bottom: 3.2rem;
+  padding-top: 1.5rem;
+  margin-bottom: 7rem;
   font-weight: bold;
   background: #1b2330;
   text-align: center;
-}
-.sidebar-header .user-email {
-  font-size: 14px;
-  color: darkgray;
 }
 .pro-sidebar {
   width: 280px;
@@ -238,18 +215,11 @@ body {
 @media (max-width: 992px) {
   .pro-sidebar.md {
     position: fixed;
-    left: -280px;
+    left: -300px;
   }
   .pro-sidebar.md.rtl {
     left: auto;
-    right: -280px;
-  }
-}
-
-@media (max-width: 767px) {
-  .app.rtl .btn-toggle {
-    margin-left: 16px;
-    margin-right: 0px;
+    right: -300px;
   }
 }
 .user-image {
@@ -259,7 +229,12 @@ body {
   border-radius: 0.75rem;
   border: 7px solid #252f3e;
 }
-
+.pro-sidebar .user-image {
+  margin-bottom: 1.5rem;
+}
+.pro-sidebar-inner {
+  height: 90vh !important;
+}
 .pro-sidebar-content,
 .pro-sidebar > .pro-sidebar-inner,
 .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
@@ -298,14 +273,11 @@ body {
 .active-menu {
   background: white !important;
 }
-.active-menu .pro-icon-wrapper {
-  background: #000 !important;
-}
 .MuiAppBar-colorPrimary {
-  background: #ccc !important;
+  background: #1d1d1d !important;
 }
 .MuiTypography-h6 {
-  color: black !important;
+  color: white !important;
   font-weight: 600 !important;
   letter-spacing: 2px !important;
 }
