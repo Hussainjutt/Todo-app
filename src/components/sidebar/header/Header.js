@@ -62,12 +62,13 @@ const Header = ({
                 if (width > 992) {
                   setFix(!fix);
                   setCollapsed(!collapsed);
+                  console.log(fix);
                 } else {
-                  debugger;
                   handleToggleSidebar(true);
                 }
               }}
             >
+              jnj
               <FaBars />
             </div>
             <Typography variant="h6" className={classes.title}>

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
+import TextField from "@mui/material/TextField";
 import { Button } from "react-bootstrap";
 import confirmEmail from "../../../assets/svgs/confirmemail.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -27,6 +26,12 @@ const Index = () => {
       setLoader(false);
     }
   };
+  useEffect(() => {
+    document.body.style.overflow = "auto";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
   return (
     <>
       <ToastContainer pauseOnHover={true} />
@@ -47,36 +52,37 @@ const Index = () => {
             {({
               handleBlur,
               handleSubmit,
-              handleChange,
+              setFieldValue,
               values,
               errors,
               touched,
             }) => (
               <form onSubmit={handleSubmit}>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Email address"
+                <TextField
                   className="mb-3"
-                >
-                  <Form.Control
-                    type="email"
-                    placeholder="name@example.com"
-                    name="email"
-                    value={values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.email && touched.email ? "input_error" : ""
-                    }
-                    size="sm"
-                  />
-                  {errors.email && touched.email && (
-                    <>
-                      <span className="error_text">{errors.email}</span>
-                      <br />
-                    </>
-                  )}
-                </FloatingLabel>
+                  error={errors.email && touched.email}
+                  id={
+                    errors.email && touched.email
+                      ? "outlined-error-helper-text"
+                      : "outlined-basic"
+                  }
+                  label={
+                    errors.email && touched.email ? "Error" : "Email Address"
+                  }
+                  variant="outlined"
+                  helperText={
+                    errors.email &&
+                    touched.email &&
+                    "Please Enter an valid Email"
+                  }
+                  type="email"
+                  value={values.email}
+                  onChange={(e) => {
+                    setFieldValue("email", e.target.value);
+                  }}
+                  onBlur={handleBlur}
+                  fullWidth
+                />
                 <Button
                   variant="dark"
                   type="button"

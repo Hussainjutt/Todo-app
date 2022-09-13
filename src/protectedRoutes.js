@@ -1,7 +1,8 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-import { isAfter } from "date-fns";
+import isAfter from "date-fns/isAfter";
+import { useEffect } from "react";
 
 const useAuth = () => {
   let auth = { isAuthenticated: false };
@@ -15,6 +16,12 @@ const useAuth = () => {
   return auth.isAuthenticated;
 };
 const ProtectedRoutes = () => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "hidden";
+    };
+  }, []);
   const isAuth = useAuth();
   return isAuth ? <Outlet /> : <Navigate to="/" />;
 };

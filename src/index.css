@@ -284,3 +284,13 @@ body {
 .pro-sidebar-footer {
   background-color: #1d1d1d !important;
 }
+.btn:disabled {
+  pointer-events: unset !important;
+  cursor: not-allowed !important;
+}
+@media screen and (max-width: 500px) {
+  .MuiInputBase-input {
+    background-color: white !important;
+    border-radius: 4px !important;
+  }
+}

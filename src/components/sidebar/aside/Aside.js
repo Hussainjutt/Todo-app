@@ -21,7 +21,7 @@ const Aside = ({
   collapsed,
   setCollapsed,
   fix,
-  setWidth,
+  screenSize,
 }) => {
   const navigate = useNavigate();
   const data = useSelector((state) => state.profileReducer.userInfo);
@@ -30,29 +30,10 @@ const Aside = ({
     localStorage.clear();
     navigate("/");
   };
-  const [winwidth, setWinwidth] = useState({
-    winWidth: window.innerWidth,
-    winHeight: window.innerHeight,
-  });
-
-  const detectSize = () => {
-    setWinwidth({
-      winWidth: window.innerWidth,
-      winHeight: window.innerHeight,
-    });
-    setWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", detectSize);
-
-    return () => {
-      window.removeEventListener("resize", detectSize);
-    };
-  }, [winwidth]);
   return (
     <ProSidebar
       toggled={toggled}
-      collapsed={winwidth.winWidth <= 992 ? false : collapsed}
+      collapsed={screenSize <= 992 ? false : collapsed}
       breakPoint="lg"
       onToggle={handleToggleSidebar}
       onMouseEnter={() => {

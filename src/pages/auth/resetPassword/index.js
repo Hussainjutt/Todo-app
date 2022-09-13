@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
+import React, { useState, useEffect } from "react";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import ResetPassword from "../../../assets/svgs/resetpassword.svg";
@@ -14,6 +17,8 @@ import axios from "axios";
 import * as yup from "yup";
 const Index = () => {
   const navigate = useNavigate();
+  const [visibility, setVisibility] = useState(false);
+  const [visibility2, setVisibility2] = useState(false);
   var { token } = useParams();
   const [loading, setLoading] = useState(false);
   const resetPassword = async (values) => {
@@ -35,13 +40,19 @@ const Index = () => {
       toast.error(err.response.data.message);
     }
   };
+  useEffect(() => {
+    document.body.style.overflow = "auto";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
   return (
     <>
+      <ToastContainer pauseOnHover={true} />
       <div
         className="auth_page_container"
         style={{ marginTop: "3rem", gridGap: "8rem" }}
       >
-        <ToastContainer pauseOnHover={true} />
         <div className="auth_card">
           <div className="auth_card_header">ResetPassword</div>
           <Formik
@@ -57,61 +68,85 @@ const Index = () => {
             {({
               handleBlur,
               handleSubmit,
-              handleChange,
+              setFieldValue,
               values,
               errors,
               touched,
             }) => (
               <form onSubmit={handleSubmit}>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Password"
+                <TextField
                   className="mb-3"
-                >
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    size="sm"
-                    name="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.password && touched.password ? "input_error" : ""
-                    }
-                  />
-                  {errors.password && touched.password && (
-                    <>
-                      <span className="error_text">{errors.password}</span>
-                    </>
-                  )}
-                </FloatingLabel>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Confirm Password"
-                >
-                  <Form.Control
-                    type="password"
-                    placeholder="Confirm Password"
-                    size="sm"
-                    name="confirmPassword"
-                    value={values.confirmPassword}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.confirmPassword && touched.confirmPassword
-                        ? "input_error"
-                        : ""
-                    }
-                  />
-                  {errors.confirmPassword && touched.confirmPassword && (
-                    <>
-                      <span className="error_text">
-                        {errors.confirmPassword}
-                      </span>
-                    </>
-                  )}
-                </FloatingLabel>
+                  error={errors.password && touched.password}
+                  id={
+                    errors.email && touched.email
+                      ? "outlined-error-helper-text"
+                      : "outlined-basic"
+                  }
+                  label={
+                    errors.password && touched.password ? "Error" : "Password"
+                  }
+                  variant="outlined"
+                  helperText={
+                    errors.password && touched.password && errors.password
+                  }
+                  type={visibility ? "text" : "password"}
+                  value={values.password}
+                  onChange={(e) => {
+                    setFieldValue("password", e.target.value);
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setVisibility(!visibility)}
+                        >
+                          {visibility ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  onBlur={handleBlur}
+                  fullWidth
+                />
+                <TextField
+                  error={errors.confirmPassword && touched.confirmPassword}
+                  id={
+                    errors.email && touched.email
+                      ? "outlined-error-helper-text"
+                      : "outlined-basic"
+                  }
+                  label={
+                    errors.confirmPassword && touched.confirmPassword
+                      ? "Error"
+                      : "Confirm Password"
+                  }
+                  variant="outlined"
+                  helperText={
+                    errors.confirmPassword &&
+                    touched.confirmPassword &&
+                    errors.confirmPassword
+                  }
+                  type={visibility2 ? "text" : "password"}
+                  value={values.confirmPassword}
+                  onChange={(e) => {
+                    setFieldValue("confirmPassword", e.target.value);
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setVisibility2(!visibility2)}
+                        >
+                          {visibility2 ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  onBlur={handleBlur}
+                  fullWidth
+                />
                 <Button
                   variant="primary"
                   type="submit"
@@ -146,6 +181,7 @@ let schema = yup.object().shape({
     .min(6, "Password is too short - should be 6 chars minimum."),
   confirmPassword: yup
     .string()
+    .required("Confirm Password is required")
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 export default Index;

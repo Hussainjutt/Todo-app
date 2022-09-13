@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import SignUPImg from "../../../assets/svgs/signup.svg";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +10,16 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import TextField from "@mui/material/TextField";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 const Index = () => {
+  const [visibility, setVisibility] = useState(false);
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const signUp = async (values) => {
@@ -31,6 +38,12 @@ const Index = () => {
       setLoader(false);
     }
   };
+  useEffect(() => {
+    document.body.style.overflow = "auto";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
   return (
     <>
       <ToastContainer pauseOnHover={true} />
@@ -44,7 +57,7 @@ const Index = () => {
             initialValues={{
               first_name: "",
               last_name: "",
-              date_of_birth: "",
+              date_of_birth: null,
               email: "",
               password: "",
             }}
@@ -61,138 +74,155 @@ const Index = () => {
               values,
               errors,
               touched,
+              setFieldValue,
             }) => (
               <form onSubmit={handleSubmit}>
                 <Row className="g-2 mt-4">
                   <Col md>
-                    <FloatingLabel
-                      controlId="floatingInputGrid"
-                      label="First name"
+                    <TextField
                       className="mb-3"
-                    >
-                      <Form.Control
-                        type="text"
-                        placeholder="First Name"
-                        name="first_name"
-                        value={values.first_name}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={
-                          errors.first_name && touched.first_name
-                            ? "input_error"
-                            : ""
-                        }
-                        size="sm"
-                      />
-                      {errors.first_name && touched.first_name && (
-                        <>
-                          <span className="error_text">
-                            {errors.first_name}
-                          </span>
-                        </>
-                      )}
-                    </FloatingLabel>
+                      error={errors.first_name && touched.first_name}
+                      id={
+                        errors.email && touched.email
+                          ? "outlined-error-helper-text"
+                          : "outlined-basic"
+                      }
+                      label={
+                        errors.first_name && touched.first_name
+                          ? "Error"
+                          : "First Name"
+                      }
+                      variant="outlined"
+                      helperText={
+                        errors.first_name &&
+                        touched.first_name &&
+                        errors.first_name
+                      }
+                      type="text"
+                      value={values.first_name}
+                      onChange={(e) => {
+                        setFieldValue("first_name", e.target.value);
+                      }}
+                      onBlur={handleBlur}
+                      fullWidth
+                    />
                   </Col>
                   <Col md>
-                    <FloatingLabel
-                      controlId="floatingInputGrid"
-                      label="Last name"
+                    <TextField
                       className="mb-3"
-                    >
-                      <Form.Control
-                        type="text"
-                        placeholder="Last Name"
-                        name="last_name"
-                        value={values.last_name}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={
-                          errors.last_name && touched.last_name
-                            ? "input_error"
-                            : ""
-                        }
-                        size="sm"
-                      />
-                      {errors.last_name && touched.last_name && (
-                        <>
-                          <span className="error_text">{errors.last_name}</span>
-                        </>
-                      )}
-                    </FloatingLabel>
+                      error={errors.last_name && touched.last_name}
+                      id={
+                        errors.last_name && touched.last_name
+                          ? "outlined-error-helper-text"
+                          : "outlined-basic"
+                      }
+                      label={
+                        errors.last_name && touched.last_name
+                          ? "Error"
+                          : "First Name"
+                      }
+                      variant="outlined"
+                      helperText={
+                        errors.last_name &&
+                        touched.last_name &&
+                        errors.last_name
+                      }
+                      type="text"
+                      value={values.last_name}
+                      onChange={(e) => {
+                        setFieldValue("last_name", e.target.value);
+                      }}
+                      onBlur={handleBlur}
+                      fullWidth
+                    />
                   </Col>
                 </Row>
-                <FloatingLabel
-                  controlId="floatingDate"
+                <TextField
                   className="mb-3"
-                  label="Date of birth"
-                >
-                  <Form.Control
-                    type="date"
-                    placeholder="dd/mm/yy"
-                    name="date_of_birth"
-                    value={values.date_of_birth}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
+                  error={errors.email && touched.email}
+                  id={
+                    errors.email && touched.email
+                      ? "outlined-error-helper-text"
+                      : "outlined-basic"
+                  }
+                  label={
+                    errors.email && touched.email ? "Error" : "Email Address"
+                  }
+                  variant="outlined"
+                  helperText={
+                    errors.email &&
+                    touched.email &&
+                    "Please Enter an valid Email"
+                  }
+                  type="email"
+                  value={values.email}
+                  onChange={(e) => {
+                    setFieldValue("email", e.target.value);
+                  }}
+                  onBlur={handleBlur}
+                  fullWidth
+                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    className="mb-3"
+                    label={
                       errors.date_of_birth && touched.date_of_birth
-                        ? "input_error"
-                        : ""
+                        ? "Error"
+                        : "Date Of Birth"
                     }
-                    size="sm"
+                    value={values.date_of_birth}
+                    onChange={(newValue) => {
+                      setFieldValue("date_of_birth", newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        helperText={
+                          errors.date_of_birth &&
+                          touched.date_of_birth &&
+                          errors.date_of_birth
+                        }
+                        fullWidth
+                        {...params}
+                        error={errors.date_of_birth && touched.date_of_birth}
+                      />
+                    )}
                   />
-                  {errors.date_of_birth && touched.date_of_birth && (
-                    <>
-                      <span className="error_text">{errors.date_of_birth}</span>
-                    </>
-                  )}
-                </FloatingLabel>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Email address"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    type="email"
-                    placeholder="name@example.com"
-                    size="sm"
-                    name="email"
-                    value={values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.email && touched.email ? "input_error" : ""
-                    }
-                  />
-                  {errors.email && touched.email && (
-                    <>
-                      <span className="error_text">{errors.email}</span>
-                    </>
-                  )}
-                </FloatingLabel>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Password"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    size="sm"
-                    name="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.password && touched.password ? "input_error" : ""
-                    }
-                  />
-                  {errors.password && touched.password && (
-                    <>
-                      <span className="error_text">{errors.password}</span>
-                    </>
-                  )}
-                </FloatingLabel>
+                </LocalizationProvider>
 
+                <TextField
+                  error={errors.password && touched.password}
+                  id={
+                    errors.email && touched.email
+                      ? "outlined-error-helper-text"
+                      : "outlined-basic"
+                  }
+                  label={
+                    errors.password && touched.password ? "Error" : "Password"
+                  }
+                  variant="outlined"
+                  helperText={
+                    errors.password && touched.password && errors.password
+                  }
+                  type={visibility ? "text" : "password"}
+                  value={values.password}
+                  onChange={(e) => {
+                    setFieldValue("password", e.target.value);
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setVisibility(!visibility)}
+                        >
+                          {visibility ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  onBlur={handleBlur}
+                  fullWidth
+                />
                 <Button
                   variant="primary"
                   type="submit"
@@ -227,7 +257,12 @@ const Index = () => {
 let schema = yup.object().shape({
   first_name: yup.string().required("First Name is required"),
   last_name: yup.string().required("Last Name is required"),
-  date_of_birth: yup.string().required("Date of birth is required"),
+  date_of_birth: yup
+    .date()
+    .typeError("please enter a valid date")
+    .required()
+    .min("1969-11-13", "Date is too early")
+    .max("2012-11-13", "Date is not correct"),
   email: yup
     .string()
     .email("Enter an valid email")

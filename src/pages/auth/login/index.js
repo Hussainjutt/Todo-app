@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import LogInImg from "../../../assets/svgs/login.svg";
@@ -14,9 +13,16 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 const Index = () => {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
+  const [visibility, setVisibility] = useState(false);
   const dispatch = useDispatch();
   const logIn = async (values) => {
     try {
@@ -32,8 +38,12 @@ const Index = () => {
         const token = JSON.stringify(req.data.token);
         localStorage.setItem("token", token);
         let date = new Date(req.data.data.date_of_birth);
-        date = date.toISOString().split("T")[0];
-        dispatch(addUserInfo({ ...req.data.data, date_of_birth: date }));
+        dispatch(
+          addUserInfo({
+            ...req.data.data,
+            date_of_birth: date.toISOString().split("T")[0],
+          })
+        );
         dispatch(addToken(req.data.token));
         setLoader(false);
         setTimeout(() => {
@@ -45,6 +55,12 @@ const Index = () => {
       setLoader(false);
     }
   };
+  useEffect(() => {
+    document.body.style.overflow = "auto";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
   return (
     <>
       <ToastContainer pauseOnHover={true} />
@@ -63,61 +79,77 @@ const Index = () => {
               handleBlur,
               handleSubmit,
               handleChange,
+              setFieldValue,
               values,
               errors,
               touched,
             }) => (
               <form onSubmit={handleSubmit}>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Email address"
+                <TextField
                   className="mb-3"
+                  error={errors.email && touched.email}
+                  id={
+                    errors.email && touched.email
+                      ? "outlined-error-helper-text"
+                      : "outlined-basic"
+                  }
+                  label={
+                    errors.email && touched.email ? "Error" : "Email Address"
+                  }
+                  variant="outlined"
+                  helperText={
+                    errors.email &&
+                    touched.email &&
+                    "Please Enter an valid Email"
+                  }
+                  type="email"
+                  value={values.email}
+                  onChange={(e) => {
+                    setFieldValue("email", e.target.value);
+                  }}
+                  onBlur={handleBlur}
+                  fullWidth
+                />
+                <TextField
+                  error={errors.password && touched.password}
+                  id={
+                    errors.email && touched.email
+                      ? "outlined-error-helper-text"
+                      : "outlined-basic"
+                  }
+                  label={
+                    errors.password && touched.password ? "Error" : "Password"
+                  }
+                  variant="outlined"
+                  helperText={
+                    errors.password && touched.password && errors.password
+                  }
+                  type={visibility ? "text" : "password"}
+                  value={values.password}
+                  onChange={(e) => {
+                    setFieldValue("password", e.target.value);
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setVisibility(!visibility)}
+                        >
+                          {visibility ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  onBlur={handleBlur}
+                  fullWidth
+                />
+                <Form.Text
+                  className="text-muted"
+                  onClick={() => navigate("/confirmemail")}
                 >
-                  <Form.Control
-                    type="email"
-                    placeholder="name@example.com"
-                    name="email"
-                    value={values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.email && touched.email ? "input_error" : ""
-                    }
-                    size="sm"
-                  />
-                  {errors.email && touched.email && (
-                    <>
-                      <span className="error_text">{errors.email}</span>
-                      <br />
-                    </>
-                  )}
-                </FloatingLabel>
-                <FloatingLabel controlId="floatingPassword" label="Password">
-                  <Form.Control
-                    type="password"
-                    name="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    placeholder="Password"
-                    className={
-                      errors.password && touched.password ? "input_error" : ""
-                    }
-                    size="sm"
-                  />
-                  {errors.password && touched.password && (
-                    <>
-                      <span className="error_text">{errors.password}</span>
-                      <br />
-                    </>
-                  )}
-                  <Form.Text
-                    className="text-muted"
-                    onClick={() => navigate("/confirmemail")}
-                  >
-                    Forgot your password?
-                  </Form.Text>
-                </FloatingLabel>
+                  Forgot your password?
+                </Form.Text>
                 <Button
                   variant="primary"
                   type="submit"

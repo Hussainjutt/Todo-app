@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./header/Header";
 import Aside from "./aside/Aside";
 
@@ -10,9 +10,18 @@ const Layout = ({ children, title }) => {
   const handleToggleSidebar = (value) => {
     setToggled(value);
   };
+  const [winwidth, setWinwidth] = useState(null);
+  const detectSize = () => {
+    setWinwidth(window.innerWidth);
+  };
   useEffect(() => {
-    document.body.style.overflow = "hidden";
-  }, []);
+    window.addEventListener("resize", detectSize);
+    window.addEventListener("load", detectSize);
+    return () => {
+      window.removeEventListener("resize", detectSize);
+      window.addEventListener("load", detectSize);
+    };
+  }, [winwidth]);
   return (
     <>
       <Header
@@ -22,7 +31,7 @@ const Layout = ({ children, title }) => {
         setCollapsed={setCollapsed}
         fix={fix}
         setFix={setFix}
-        width={width}
+        width={winwidth}
       />
       <div className={`app  ${toggled ? "toggled" : ""}`}>
         <Aside
@@ -31,7 +40,7 @@ const Layout = ({ children, title }) => {
           collapsed={collapsed}
           setCollapsed={setCollapsed}
           fix={fix}
-          setWidth={setWidth}
+          screenSize={winwidth}
         />
         <main>
           <div className="app-content">{children}</div>
