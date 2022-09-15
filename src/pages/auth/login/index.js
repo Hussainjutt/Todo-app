@@ -55,12 +55,6 @@ const Index = () => {
       setLoader(false);
     }
   };
-  useEffect(() => {
-    document.body.style.overflow = "auto";
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, []);
   return (
     <>
       <ToastContainer pauseOnHover={true} />
