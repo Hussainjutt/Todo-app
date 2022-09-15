@@ -14,19 +14,6 @@ export const addToken = (token) => {
     },
   };
 };
-export const updateTodo = (values) => {
-  return {
-    type: "UPDATE_TODO",
-    payload: {
-      values: values,
-    },
-  };
-};
-export const deleteTodo = (id) => {
-  return {
-    type: "DELETE_TODO",
-  };
-};
 export const searchTodos = (values) => {
   return {
     type: "SEARCH_TODOS",

@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Dummy from "../../../assets/images/dummy-man.png";
 import ErrorImg from "../../../assets/images/errorImg.jpg";
-import { BiLogOut, BiMenu } from "react-icons/bi";
+import { BiLogOut } from "react-icons/bi";
 
 const useStyles = makeStyles((theme) => ({
   root: {

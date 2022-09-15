@@ -1,0 +1,42 @@
+.user-img {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 10px solid #ccc;
+}
+.user-img img {
+  object-fit: fill;
+  width: 67px;
+  height: 63px;
+}
+.pro-sidebar-content {
+  background-color: #ccc !important;
+}
+.pro-sidebar-header {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.pro-menu-item:hover {
+  background-color: gray;
+}
+.pro-menu-item:hover .pro-item-content {
+  color: unset !important;
+}
+.pro-item-content {
+  color: black;
+}
+.sideBar-logout-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 1rem;
+  padding: 5% 10%;
+  border: 1px solid gray;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.pro-sidebar-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

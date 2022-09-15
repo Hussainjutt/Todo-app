@@ -8,9 +8,12 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { updateTodo, currentPage } from "../redux/action/index";
+import { currentPage } from "../redux/action/index";
 import Pagination from "react-bootstrap/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
+import done from "../../assets/svgs/done-icon.svg";
+import cancel from "../../assets/svgs/cancel-icon.svg";
+
 const Index = ({ count }) => {
   const [data, setData] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -19,6 +22,7 @@ const Index = ({ count }) => {
   const [pageData, setPageData] = useState("");
   const [prev, setPrev] = useState(1);
   const [index, setIndex] = useState(0);
+  const [updateTodo, setUpdateTodo] = useState({ i: "", todo: "" });
   const dispatch = useDispatch();
   const token = useSelector((state) => state.profileReducer.token);
   const searchTodo = useSelector((state) => state.todoReducer.data);
@@ -43,7 +47,6 @@ const Index = ({ count }) => {
     }
   };
   const handleComplete = async (id, status, title) => {
-    console.log(id, status, title);
     try {
       await axios.patch(
         `${process.env.REACT_APP_API_URL}/todos/${id}`,
@@ -95,6 +98,27 @@ const Index = ({ count }) => {
       toast.error(err.response.data.message);
     }
   };
+  const handleUpdateTodo = async (todoId) => {
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_API_URL}/todos/${todoId}`,
+        {
+          title: updateTodo.todo,
+        },
+        {
+          headers: {
+            jwt_token: token,
+          },
+        }
+      );
+      toast.success("Todo updated successfully");
+      setUpdateTodo({ ...updateTodo, todo: "", i: "" });
+      setId("");
+      todos();
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  };
   useEffect(() => {
     todos();
   }, [count, param]);
@@ -114,7 +138,6 @@ const Index = ({ count }) => {
           boxShadow: index === 0 && "-5px 1px 5px -2px rgba(0, 0, 0, 0.2)",
         }}
       >
-        {" "}
         {[
           { title: "All", param: "" },
           { title: "Active", param: "/?&status=false" },
@@ -186,42 +209,93 @@ const Index = ({ count }) => {
                           }
                         }}
                         checked={item.is_completed}
+                        disabled={updateTodo.i === i}
                       />
                     )}
                   </div>
-                  <div
-                    className={item.is_completed ? "completed" : "text"}
-                    title={item.title}
-                  >
-                    {item.title}
-                  </div>
+                  {updateTodo.i === i ? (
+                    <input
+                      type="text"
+                      className="update-todo"
+                      value={updateTodo.todo}
+                      onChange={(e) => {
+                        setUpdateTodo({ ...updateTodo, todo: e.target.value });
+                      }}
+                    />
+                  ) : (
+                    <div
+                      className={item.is_completed ? "completed" : "text"}
+                      title={item.title}
+                    >
+                      {item.title}
+                    </div>
+                  )}
                 </div>
                 <div>
-                  <span
-                    onClick={() =>
-                      dispatch(updateTodo({ id: item.id, title: item.title }))
-                    }
-                  >
-                    <VscEdit />
-                  </span>
-                  &nbsp;&nbsp;
-                  <span
-                    onClick={() => {
-                      handleDeleteTodo(item.id);
-                      setId(item.id);
-                    }}
-                  >
-                    {id === item.id ? (
-                      <Spinner animation="border" variant="danger" size="sm" />
-                    ) : (
-                      <RiDeleteBin5Line />
-                    )}
-                  </span>
+                  {updateTodo.i === i ? (
+                    <>
+                      <span
+                        onClick={() => {
+                          handleUpdateTodo(item.id);
+                          setId(updateTodo.todo);
+                        }}
+                      >
+                        {id === updateTodo.todo ? (
+                          <Spinner
+                            animation="border"
+                            variant="success"
+                            size="sm"
+                          />
+                        ) : (
+                          <img src={done} width="22px" />
+                        )}
+                      </span>
+                      &nbsp;
+                      <span
+                        onClick={() =>
+                          setUpdateTodo({ ...updateTodo, i: "", todo: "" })
+                        }
+                      >
+                        <img src={cancel} width="25px" />
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span
+                        onClick={() =>
+                          setUpdateTodo({
+                            ...updateTodo,
+                            i: i,
+                            todo: item.title,
+                          })
+                        }
+                      >
+                        <VscEdit />
+                      </span>
+                      &nbsp;&nbsp;
+                      <span
+                        onClick={() => {
+                          handleDeleteTodo(item.id);
+                          setId(item.id);
+                        }}
+                      >
+                        {id === item.id ? (
+                          <Spinner
+                            animation="border"
+                            variant="danger"
+                            size="sm"
+                          />
+                        ) : (
+                          <RiDeleteBin5Line />
+                        )}
+                      </span>
+                    </>
+                  )}
                 </div>
               </li>
             ))
           )}
-          <div className="list-foter">
+          <div className="list-footer">
             <div>
               {data.filter((item) => item.is_completed === false).length} items
               left

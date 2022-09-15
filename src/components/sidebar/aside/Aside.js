@@ -53,12 +53,6 @@ const Aside = ({
     >
       <SidebarHeader>
         <div className="sidebar-header">
-          {/* <p className="user-name text-white mb-2">
-            {data.first_name === " "
-              ? "user name"
-              : data.first_name + " " + data.last_name}
-          </p> */}
-          {/* {!collapsed && <p className="user-email">{data.email}</p>} */}
           <div className="d-flex justify-content-center">
             <div className="position-absolute bottom-0">
               <img

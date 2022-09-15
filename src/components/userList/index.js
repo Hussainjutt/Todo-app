@@ -44,7 +44,7 @@ const Index = () => {
     getAllUsers();
   }, [param]);
   return (
-    <div className="container bootstrap snippets bootdey mt-5">
+    <div className="container bootstrap snippets bootdey">
       <ToastContainer pauseOnHover={true} />
       <div className="row">
         <div className="col-lg-12">

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Layout from "../../components/sidebar/index";
+import Layout from "../../components/layout/index";
 import ProfileCard from "../../components/profileCard/index";
 import EditProfile from "../../components/editProfile/index";
 import { Row, Col } from "react-bootstrap";
@@ -8,7 +8,7 @@ const Index = () => {
   const [num, setNum] = useState(0);
   return (
     <Layout title={"Profile"}>
-      <Row className="Layout_1" id="scroller">
+      <Row style={{ zIndex: "-1" }}>
         <Col className="col-lg-8 col-md-7 col-sm-12 mb-5 col-12">
           <EditProfile num={num} />
         </Col>

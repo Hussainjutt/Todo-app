@@ -44,6 +44,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
+  white-space: nowrap;
 }
 .checkbox {
   -webkit-appearance: none;
@@ -82,7 +83,7 @@
 .checkbox:checked::before {
   display: block;
 }
-.list-foter {
+.list-footer {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
@@ -92,17 +93,22 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
-.list-foter p:hover {
+.list-footer p:hover {
   cursor: pointer;
   color: #6082d1;
 }
-.list-foter p:active {
+.list-footer p:active {
   color: #6082d1;
 }
 .list-item ul li .completed {
   padding-left: 7px;
   text-decoration: line-through;
   color: #ccc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  white-space: nowrap;
+  width: 150px;
 }
 .list-item ul li span {
   font-size: 20px;
@@ -110,4 +116,12 @@
 .list-item ul li span:hover {
   color: #6082d1;
   cursor: pointer;
+}
+.update-todo {
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  outline: none;
+  border-radius: 3px;
+  margin-left: 0.3rem;
 }

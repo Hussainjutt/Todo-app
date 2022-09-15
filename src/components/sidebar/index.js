@@ -6,20 +6,19 @@ const Layout = ({ children, title }) => {
   const [toggled, setToggled] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [fix, setFix] = useState(true);
-  const [width, setWidth] = useState("");
   const handleToggleSidebar = (value) => {
     setToggled(value);
   };
   const [winwidth, setWinwidth] = useState(null);
-  const detectSize = () => {
-    setWinwidth(window.innerWidth);
-  };
   useEffect(() => {
-    window.addEventListener("resize", detectSize);
-    window.addEventListener("load", detectSize);
+    window.addEventListener("resize", setWinwidth(window.innerWidth));
+    window.addEventListener("DOMContentLoaded", setWinwidth(window.innerWidth));
     return () => {
-      window.removeEventListener("resize", detectSize);
-      window.addEventListener("load", detectSize);
+      window.removeEventListener("resize", setWinwidth(window.innerWidth));
+      window.addEventListener(
+        "DOMContentLoaded",
+        setWinwidth(window.innerWidth)
+      );
     };
   }, [winwidth]);
   return (
