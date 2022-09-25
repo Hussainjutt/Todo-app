@@ -11,8 +11,9 @@ import "./style.css";
 import Pagination from "react-bootstrap/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import { Skeleton } from "@mui/material";
 
-const Index = () => {
+const Index = ({ loader }) => {
   const token = useSelector((state) => state.profileReducer.token);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -60,19 +61,26 @@ const Index = () => {
                 >
                   <thead>
                     <tr>
-                      <th>
-                        <span>User</span>
-                      </th>
-                      <th>
-                        <span>Date of birth</span>
-                      </th>
-                      <th>
-                        <span>Status</span>
-                      </th>
-                      <th>
-                        <span>Email</span>
-                      </th>
-                      <th>Change Status</th>
+                      {[
+                        { title: "User" },
+                        { title: "Date Of Birth" },
+                        { title: "Status" },
+                        { title: "Email" },
+                        { title: "Change Status" },
+                      ].map((el) => (
+                        <th>
+                          {loader ? (
+                            <Skeleton
+                              variant="text"
+                              sx={{ width: "50%" }}
+                              height={30}
+                              animation="wave"
+                            />
+                          ) : (
+                            <span>{el.title}</span>
+                          )}
+                        </th>
+                      ))}
                     </tr>
                   </thead>
                   {loading ? (

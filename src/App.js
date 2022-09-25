@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Todoapp from "./pages/todo_app/index";
 import LogIn from "./pages/auth/login/index";

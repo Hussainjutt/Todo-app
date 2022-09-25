@@ -11,13 +11,14 @@ import { addUserInfo } from "../redux/action/index";
 import { Button } from "react-bootstrap";
 import { TbLink } from "react-icons/tb";
 import { useSelector, useDispatch } from "react-redux";
+import { Skeleton } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import { Formik } from "formik";
 import * as yup from "yup";
 import "react-toastify/dist/ReactToastify.css";
 import "./style.css";
 
-const Index = ({ num }) => {
+const Index = (props) => {
   const [loader, setLoader] = useState(false);
   const [state, setState] = useState({
     first_name: "",
@@ -31,10 +32,10 @@ const Index = ({ num }) => {
   const dispatch = useDispatch();
   const InputRef = useRef();
   useEffect(() => {
-    if (num >= 1) {
+    if (props.num >= 1) {
       InputRef.current.focus();
     }
-  }, [num]);
+  }, [props.num]);
   const updateProfile = async (values) => {
     const formData = new FormData();
     formData.append("first_name", values.first_name);
@@ -104,107 +105,158 @@ const Index = ({ num }) => {
         }) => (
           <form onSubmit={handleSubmit}>
             <div className="general_information">
-              <h3>General Information</h3>
+              <h3>
+                {" "}
+                {props.loader ? (
+                  <Skeleton
+                    variant="text"
+                    width={255}
+                    height={45}
+                    animation="wave"
+                  />
+                ) : (
+                  "General Information"
+                )}
+              </h3>
               <Row className="g-2 mb-4 mt-4">
                 <Col md>
-                  <FloatingLabel
-                    controlId="floatingInputGrid"
-                    label="First name"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="First Name"
-                      name="first_name"
-                      value={values.first_name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      ref={InputRef}
-                      className={
-                        errors.first_name && touched.first_name
-                          ? "input_error"
-                          : ""
-                      }
-                      size="sm"
-                    />
-                    {errors.first_name && touched.first_name && (
-                      <>
-                        <span className="error_text">{errors.first_name}</span>
-                      </>
-                    )}
-                  </FloatingLabel>
+                  {props.loader ? (
+                    <Skeleton variant="rounded" height={58} animation="wave" />
+                  ) : (
+                    <FloatingLabel
+                      controlId="floatingInputGrid"
+                      label="First name"
+                    >
+                      <Form.Control
+                        type="text"
+                        placeholder="First Name"
+                        name="first_name"
+                        value={values.first_name}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        ref={InputRef}
+                        className={
+                          errors.first_name && touched.first_name
+                            ? "input_error"
+                            : ""
+                        }
+                        size="sm"
+                      />
+                      {errors.first_name && touched.first_name && (
+                        <>
+                          <span className="error_text">
+                            {errors.first_name}
+                          </span>
+                        </>
+                      )}
+                    </FloatingLabel>
+                  )}
                 </Col>
                 <Col md>
-                  <FloatingLabel
-                    controlId="floatingInputGrid"
-                    label="Last name"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="Last Name"
-                      name="last_name"
-                      value={values.last_name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.last_name && touched.last_name
-                          ? "input_error"
-                          : ""
-                      }
-                      size="sm"
-                    />
-                    {errors.last_name && touched.last_name && (
-                      <>
-                        <span className="error_text">{errors.last_name}</span>
-                      </>
-                    )}
-                  </FloatingLabel>
+                  {props.loader ? (
+                    <Skeleton variant="rounded" height={58} animation="wave" />
+                  ) : (
+                    <FloatingLabel
+                      controlId="floatingInputGrid"
+                      label="Last name"
+                    >
+                      <Form.Control
+                        type="text"
+                        placeholder="Last Name"
+                        name="last_name"
+                        value={values.last_name}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.last_name && touched.last_name
+                            ? "input_error"
+                            : ""
+                        }
+                        size="sm"
+                      />
+                      {errors.last_name && touched.last_name && (
+                        <>
+                          <span className="error_text">{errors.last_name}</span>
+                        </>
+                      )}
+                    </FloatingLabel>
+                  )}
                 </Col>
               </Row>
-              <FloatingLabel
-                controlId="floatingDate"
-                className="mb-5 mt-4"
-                label="Date of birth"
-              >
-                <Form.Control
-                  type="date"
-                  placeholder="dd/mm/yy"
-                  name="date_of_birth"
-                  value={values.date_of_birth}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.date_of_birth && touched.date_of_birth
-                      ? "input_error"
-                      : ""
-                  }
-                  size="sm"
+              {props.loader ? (
+                <Skeleton
+                  variant="rounded"
+                  className="mb-5 mt-4"
+                  height={58}
+                  animation="wave"
                 />
-                {errors.date_of_birth && touched.date_of_birth && (
-                  <>
-                    <span className="error_text">{errors.date_of_birth}</span>
-                  </>
+              ) : (
+                <FloatingLabel
+                  controlId="floatingDate"
+                  className="mb-5 mt-4"
+                  label="Date of birth"
+                >
+                  <Form.Control
+                    type="date"
+                    placeholder="dd/mm/yy"
+                    name="date_of_birth"
+                    value={values.date_of_birth}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={
+                      errors.date_of_birth && touched.date_of_birth
+                        ? "input_error"
+                        : ""
+                    }
+                    size="sm"
+                  />
+                  {errors.date_of_birth && touched.date_of_birth && (
+                    <>
+                      <span className="error_text">{errors.date_of_birth}</span>
+                    </>
+                  )}
+                </FloatingLabel>
+              )}
+              <h3>
+                {props.loader ? (
+                  <Skeleton
+                    variant="text"
+                    width={200}
+                    height={45}
+                    animation="wave"
+                  />
+                ) : (
+                  "Profile Picture"
                 )}
-              </FloatingLabel>
-              <h3>Profile Picture</h3>
+              </h3>
               <div className="profile_picture_container mt-4">
                 <div>
-                  <img
-                    src={
-                      file === ""
-                        ? data.profile_pic === null
-                          ? Dummy
-                          : `${process.env.REACT_APP_IMG_URL}/${values.profile_pic}`
-                        : file
-                    }
-                    style={{
-                      height: "100px",
-                      width: "100px",
-                      border: "1px solid black",
-                      borderRadius: "50%",
-                    }}
-                    onError={(e) => (e.target.src = ErrorImg)}
-                    alt="profile"
-                  />
+                  {props.loader ? (
+                    <Skeleton
+                      variant="circular"
+                      width={100}
+                      height={100}
+                      animation="wave"
+                    />
+                  ) : (
+                    <img
+                      src={
+                        file === ""
+                          ? data.profile_pic === null
+                            ? Dummy
+                            : `${process.env.REACT_APP_IMG_URL}/${values.profile_pic}`
+                          : file
+                      }
+                      style={{
+                        height: "100px",
+                        width: "100px",
+                        border: "1px solid black",
+                        borderRadius: "50%",
+                      }}
+                      onError={(e) => (e.target.src = ErrorImg)}
+                      alt="profile"
+                    />
+                  )}
                 </div>
                 <p style={{ fontSize: "30px", cursor: "pointer" }}>
                   <input
@@ -231,18 +283,42 @@ const Index = ({ num }) => {
                     className="oko"
                     size="sm"
                   />
-                  <TbLink
-                    onClick={() =>
-                      document.getElementById("profile-pic").click()
-                    }
-                  />
+                  {props.loader ? (
+                    <Skeleton
+                      variant="rounded"
+                      width={40}
+                      height={40}
+                      animation="wave"
+                    />
+                  ) : (
+                    <TbLink
+                      onClick={() =>
+                        document.getElementById("profile-pic").click()
+                      }
+                    />
+                  )}
                 </p>
                 <div>
-                  <h4 style={{ whiteSpace: "wrap", maxWidth: "70%" }}>
-                    Change Profile Image
-                  </h4>
+                  {props.loader ? (
+                    <Skeleton
+                      variant="text"
+                      height={35}
+                      width={200}
+                      animation="wave"
+                    />
+                  ) : (
+                    <h4 style={{ whiteSpace: "wrap", maxWidth: "70%" }}>
+                      Change Profile Image
+                    </h4>
+                  )}
                   {fileName === "" ? (
-                    <p>No file selected</p>
+                    <p>
+                      {props.loader ? (
+                        <Skeleton variant="text" height={35} animation="wave" />
+                      ) : (
+                        "No file selected"
+                      )}
+                    </p>
                   ) : (
                     <p
                       style={{
@@ -260,18 +336,29 @@ const Index = ({ num }) => {
                 </div>
               </div>
             </div>
-            <Button
-              type="submit"
-              variant="dark"
-              className="w-50 mt-5"
-              disabled={loader}
-            >
-              {loader ? (
-                <Spinner animation="border" variant="light" />
-              ) : (
-                "Save all"
-              )}
-            </Button>
+            {props.loader ? (
+              <Skeleton
+                variant="rounded"
+                className="w-50 mt-5"
+                height={45}
+                animation="wave"
+              />
+            ) : (
+              <>
+                <Button
+                  type="submit"
+                  variant="dark"
+                  className="w-50 mt-5"
+                  disabled={loader}
+                >
+                  {loader ? (
+                    <Spinner animation="border" variant="light" />
+                  ) : (
+                    "Save all"
+                  )}
+                </Button>
+              </>
+            )}
           </form>
         )}
       </Formik>

@@ -3,22 +3,21 @@
   grid-template-rows: 90px auto;
   grid-template-columns: 270px auto;
   grid-template-areas:
-    "header header"
+    "sidebar header"
     "sidebar maincontent";
 }
 .header-wrapper {
   grid-area: header;
-  height: 90px;
-  background-color: #1d1d1d;
-  position: fixed;
+  background-color: #202020;
+  position: sticky;
+  top: -5px;
   width: 100%;
   z-index: 1;
 }
 .sideBar-wrapper {
   grid-area: sidebar;
-  height: 85.6vh !important;
+  height: 100vh;
   position: fixed;
-  top: 90px;
   z-index: 1;
 }
 .main-content {

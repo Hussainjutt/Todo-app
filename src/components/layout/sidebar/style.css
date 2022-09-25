@@ -1,7 +1,7 @@
 .user-img {
   border-radius: 10px;
   overflow: hidden;
-  border: 10px solid #ccc;
+  border: 6px solid #ccc;
 }
 .user-img img {
   object-fit: fill;
@@ -15,6 +15,7 @@
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
+  background-color: #181818;
 }
 .pro-menu-item:hover {
   background-color: gray;
@@ -38,5 +39,18 @@
 .pro-sidebar-footer {
   display: flex;
   justify-content: center;
+  background-color: #181818;
   align-items: center;
+}
+.close-btn {
+  display: none;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  font-size: 30px;
+}
+@media screen and (max-width: 992px) {
+  .close-btn {
+    display: unset !important ;
+  }
 }

@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/exports";
 import Dummy from "../../../assets/images/dummy-man.png";
 import ErrorImg from "../../../assets/images/errorImg.jpg";
+import Skeleton from "@mui/material/Skeleton";
+
 const Index = (props) => {
   const data = useSelector((state) => state.profileReducer.userInfo);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -25,15 +27,25 @@ const Index = (props) => {
   const navigate = useNavigate();
   return (
     <div className="header-container">
-      <div className="about-page">
-        <div
-          className="sidebar-controller"
-          onClick={() => props.setSideBar(!props.sidebar)}
-        >
-          <MdMenu />
-        </div>
-        <p>{props.title}</p>
+      <div
+        className="sidebar-controller"
+        onClick={() => props.setSideBar(true)}
+      >
+        <MdMenu />
       </div>
+      <p className="page-title">
+        {props.loader ? (
+          <Skeleton
+            variant="text"
+            sx={{ fontSize: "1rem", bgcolor: "#181818" }}
+            width={120}
+            height={60}
+            animation="wave"
+          />
+        ) : (
+          props.title
+        )}
+      </p>
       <div className="info-container">
         <IconButton
           aria-label="account of current user"
@@ -42,17 +54,28 @@ const Index = (props) => {
           onClick={handleMenu}
           color="inherit"
         >
-          <img
-            src={
-              data.profile_pic === null
-                ? Dummy
-                : `https://juttv1.herokuapp.com/img/users/${data.profile_pic}`
-            }
-            style={{ border: "4px solid gray" }}
-            onError={(e) => (e.target.src = ErrorImg)}
-            alt="Somthing went wrong"
-          />
+          {props.loader ? (
+            <Skeleton
+              variant="circular"
+              sx={{ bgcolor: "gray" }}
+              width={40}
+              height={40}
+              animation="wave"
+            />
+          ) : (
+            <img
+              src={
+                data.profile_pic === null
+                  ? Dummy
+                  : `https://juttv1.herokuapp.com/img/users/${data.profile_pic}`
+              }
+              style={{ border: "4px solid gray" }}
+              onError={(e) => (e.target.src = ErrorImg)}
+              alt="Somthing went wrong"
+            />
+          )}
         </IconButton>
+
         <Menu
           id="menu-appbar"
           anchorEl={anchorEl}
