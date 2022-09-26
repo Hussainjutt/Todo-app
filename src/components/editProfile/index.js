@@ -339,7 +339,7 @@ const Index = (props) => {
             {props.loader ? (
               <Skeleton
                 variant="rounded"
-                className="w-50 mt-5"
+                className="w-75 mt-5"
                 height={45}
                 animation="wave"
               />
@@ -348,7 +348,7 @@ const Index = (props) => {
                 <Button
                   type="submit"
                   variant="dark"
-                  className="w-50 mt-5"
+                  className="w-75 mt-5"
                   disabled={loader}
                 >
                   {loader ? (

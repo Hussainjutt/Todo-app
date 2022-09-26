@@ -1,15 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import "./style.css";
 import { RiAddCircleLine } from "react-icons/ri";
 import { Formik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as yup from "yup";
 import axios from "axios";
 import { Spinner } from "react-bootstrap";
+import Skeleton from "@mui/material/Skeleton";
 
-const Index = ({ counter, count }) => {
+const Index = (props) => {
   const token = useSelector((state) => state.profileReducer.token);
   const userID = useSelector((state) => state.profileReducer.userInfo.id);
   const [loader, setLoader] = useState(false);
@@ -23,7 +24,7 @@ const Index = ({ counter, count }) => {
       });
       toast.success("Todo created successfully");
       setLoader(false);
-      counter(count + 1);
+      props.counter(props.count + 1);
       resetForm();
     } catch (err) {
       toast.error(err.response.data.message);
@@ -51,23 +52,36 @@ const Index = ({ counter, count }) => {
         }) => (
           <form onSubmit={handleSubmit}>
             <div className="input_container">
-              <button className="icon" type="submit">
-                {loader ? (
-                  <Spinner animation="border" variant="info" size="sm" />
-                ) : (
-                  <RiAddCircleLine />
-                )}
-              </button>
-              <input
-                type="text"
-                placeholder="Create a new todo"
-                name="title"
-                value={values.title}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className={errors.title && touched.title ? "input_error" : ""}
-                disabled={loader}
-              />
+              {props.loader ? (
+                <Skeleton
+                  variant="rounded"
+                  sx={{ width: "100%" }}
+                  height={40}
+                  animation="wave"
+                />
+              ) : (
+                <>
+                  <button className="icon" type="submit">
+                    {loader ? (
+                      <Spinner animation="border" variant="info" size="sm" />
+                    ) : (
+                      <RiAddCircleLine />
+                    )}
+                  </button>
+                  <input
+                    type="text"
+                    placeholder="Create a new todo"
+                    name="title"
+                    value={values.title}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={
+                      errors.title && touched.title ? "input_error" : ""
+                    }
+                    disabled={loader}
+                  />
+                </>
+              )}
             </div>
             {errors.title && touched.title && (
               <span className="error">{errors.title}</span>

@@ -3,8 +3,9 @@ import "./style.css";
 import { BiSearchAlt } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
 import { searchTodos } from "../redux/action/index";
+import { Skeleton } from "@mui/material";
 import axios from "axios";
-const Index = () => {
+const Index = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const currentPage = useSelector((state) => state.todoReducer.page);
   const token = useSelector((state) => state.profileReducer.token);
@@ -38,21 +39,31 @@ const Index = () => {
 
   return (
     <div className="input_container_2">
-      <input
-        type="text"
-        placeholder="Search your todo"
-        name="search"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-
-      <button
-        className="icon_2"
-        type="button"
-        style={{ pointerEvents: "none" }}
-      >
-        <BiSearchAlt />
-      </button>
+      {props.loader ? (
+        <Skeleton
+          variant="rounded"
+          sx={{ width: "100%" }}
+          height={40}
+          animation="wave"
+        />
+      ) : (
+        <>
+          <input
+            type="text"
+            placeholder="Search your todo"
+            name="search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button
+            className="icon_2"
+            type="button"
+            style={{ pointerEvents: "none" }}
+          >
+            <BiSearchAlt />
+          </button>
+        </>
+      )}
     </div>
   );
 };

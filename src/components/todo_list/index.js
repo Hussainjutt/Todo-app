@@ -9,21 +9,20 @@ import "react-toastify/dist/ReactToastify.css";
 import { Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { currentPage } from "../redux/action/index";
-import Pagination from "react-bootstrap/Pagination";
+import Pagination from "../pagination/index";
+import { Skeleton } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
 import done from "../../assets/svgs/done-icon.svg";
 import cancel from "../../assets/svgs/cancel-icon.svg";
 
-const Index = ({ count }) => {
+const Index = (props) => {
   const [data, setData] = useState([]);
   const [loader, setLoader] = useState(false);
   const [param, setParam] = useState("");
   const [id, setId] = useState("");
   const [pageData, setPageData] = useState("");
-  const [prev, setPrev] = useState(1);
   const [index, setIndex] = useState(0);
   const [updateTodo, setUpdateTodo] = useState({ i: "", todo: "" });
-  const dispatch = useDispatch();
   const token = useSelector((state) => state.profileReducer.token);
   const searchTodo = useSelector((state) => state.todoReducer.data);
   const userID = useSelector((state) => state.profileReducer.userInfo.id);
@@ -121,7 +120,7 @@ const Index = ({ count }) => {
   };
   useEffect(() => {
     todos();
-  }, [count, param]);
+  }, [props.count, param]);
   useEffect(() => {
     if (searchTodo.length >= 0) {
       setData(searchTodo);
@@ -157,7 +156,16 @@ const Index = ({ count }) => {
               wordWrap: "break-word",
             }}
           >
-            {el.title}
+            {props.loader ? (
+              <Skeleton
+                variant="text"
+                sx={{ width: "30px" }}
+                height={20}
+                animation="wave"
+              />
+            ) : (
+              el.title
+            )}
           </span>
         ))}
       </div>
@@ -167,7 +175,63 @@ const Index = ({ count }) => {
       >
         <ToastContainer pauseOnHover={true} />
         <ul className="list_container">
-          {loader ? (
+          {props.loader ? (
+            <>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((el) => (
+                <li className="item">
+                  <span className="d-flex">
+                    <Skeleton
+                      variant="circular"
+                      width={15}
+                      height={15}
+                      animation="wave"
+                    />
+                    <Skeleton
+                      variant="rounded"
+                      sx={{ marginLeft: "10px" }}
+                      width={100}
+                      height={20}
+                      animation="wave"
+                    />
+                  </span>
+                  <span className="d-flex">
+                    <Skeleton
+                      variant="rounded"
+                      sx={{ marginRight: "10px" }}
+                      width={20}
+                      height={20}
+                      animation="wave"
+                    />
+                    <Skeleton
+                      variant="rounded"
+                      sx={{ marginRight: "10px" }}
+                      width={20}
+                      height={20}
+                      animation="wave"
+                    />
+                  </span>
+                </li>
+              ))}
+              <div className="list-footer">
+                <div>
+                  <Skeleton
+                    variant="rounded"
+                    width={60}
+                    height={17}
+                    animation="wave"
+                  />
+                </div>
+                <div>
+                  <Skeleton
+                    variant="rounded"
+                    width={90}
+                    height={17}
+                    animation="wave"
+                  />
+                </div>
+              </div>
+            </>
+          ) : loader ? (
             <p
               style={{
                 textAlign: "center",
@@ -295,114 +359,42 @@ const Index = ({ count }) => {
               </li>
             ))
           )}
-          <div className="list-footer">
-            <div>
-              {data.filter((item) => item.is_completed === false).length} items
-              left
+          {!props.loader && (
+            <div className="list-footer">
+              <div>
+                {data.filter((item) => item.is_completed === false).length}{" "}
+                items left
+              </div>
+              <div>
+                <p onClick={() => handleDeleteTodoAll()}>Clear completed</p>
+              </div>
             </div>
-            <div>
-              <p onClick={() => handleDeleteTodoAll()}>Clear completed</p>
-            </div>
-          </div>
+          )}
           {pageData.totalPage > 1 && (
             <>
               <hr style={{ marginLeft: "-32px" }} />
-              <Pagination>
-                <Pagination.First
-                  onClick={() => {
-                    setParam(`?page=1`);
-                    setPrev(1);
-                    dispatch(currentPage(1));
-                  }}
-                  disabled={pageData.prev_page === null}
-                />
-
-                <Pagination.Prev
-                  onClick={() => {
-                    if (prev > 1) {
-                      setPrev(prev - 1);
-                    }
-                    setParam(`?page=${pageData.page - 1}`);
-                    dispatch(currentPage(pageData.page - 1));
-                  }}
-                  disabled={pageData.prev_page === null}
-                />
-                {prev >= 2 ? (
-                  <>
-                    <Pagination.Item
-                      onClick={() => {
-                        setParam(`?pages=1`);
-                        setPrev(1);
-                        dispatch(currentPage(1));
-                      }}
-                    >
-                      1
-                    </Pagination.Item>
-                    <Pagination.Ellipsis
-                      onClick={() => {
-                        if (prev > 1) {
-                          setPrev(prev - 1);
-                        }
-                        setParam(`?page=${pageData.page - 1}`);
-                        dispatch(currentPage(pageData.page - 1));
-                      }}
-                    />
-                  </>
-                ) : null}
-
-                {[...Array(pageData.totalPage)]
-                  .slice(0, 3)
-                  .map((el, i, arr) => (
-                    <>
-                      {pageData.totalPage > prev + i ? (
-                        <Pagination.Item
-                          onClick={() => {
-                            setParam(`?page=${prev + i}`);
-                            setPrev(prev + i);
-                            dispatch(currentPage(prev + i));
-                          }}
-                          active={pageData.page === i + prev}
-                          key={prev + i}
-                        >
-                          {prev + i}
-                        </Pagination.Item>
-                      ) : null}
-                    </>
-                  ))}
-                <Pagination.Ellipsis
-                  onClick={() => {
-                    setPrev(prev + 1);
-                    setParam(`?page=${prev + 1}`);
-                    dispatch(currentPage(prev + 1));
-                  }}
-                />
-                <Pagination.Item
-                  onClick={() => {
-                    setParam(`?page=${pageData.totalPage}`);
-                    dispatch(currentPage(pageData.totalPage));
-                  }}
-                  active={pageData.page === pageData.totalPage}
+              {props.loader ? (
+                <div
+                  className="d-flex justify-content-between align-items-center"
+                  style={{ paddingRight: "30px" }}
                 >
-                  {pageData.totalPage}
-                </Pagination.Item>
-                <Pagination.Next
-                  onClick={() => {
-                    setPrev(prev + 1);
-                    setParam(`?page=${prev + 1}`);
-                    dispatch(currentPage(prev + 1));
-                  }}
-                  disabled={pageData.next_page === null}
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((el) => (
+                    <Skeleton
+                      variant="rounded"
+                      width={30}
+                      height={30}
+                      animation="wave"
+                    />
+                  ))}
+                </div>
+              ) : (
+                <Pagination
+                  pg_data={pageData}
+                  loader={loader}
+                  setLoader={setLoader}
+                  setParam={setParam}
                 />
-                <Pagination.Last
-                  onClick={() => {
-                    setParam(`?page=${pageData.totalPage}`);
-                    setPrev(pageData.totalPage);
-                    dispatch(currentPage(pageData.totalPage));
-                  }}
-                  active={pageData.page === pageData.totalPage}
-                  disabled={pageData.next_page === null}
-                />
-              </Pagination>
+              )}
             </>
           )}
         </ul>

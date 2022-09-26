@@ -1,0 +1,32 @@
+.custom-pagination {
+  width: 100%;
+  max-width: 20rem;
+  margin: auto;
+  background-color: white;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #333333;
+}
+.custom-pagination p {
+  cursor: pointer;
+  margin: 0;
+}
+.pg-btn {
+  background-color: white;
+  color: #333333;
+  padding: 10px 1rem 10px 1rem;
+  border-radius: 50%;
+}
+.pg-active {
+  background-color: #333333 !important;
+  color: white !important;
+}
+.pg-disabled {
+  color: gray !important;
+  cursor: not-allowed !important;
+}
